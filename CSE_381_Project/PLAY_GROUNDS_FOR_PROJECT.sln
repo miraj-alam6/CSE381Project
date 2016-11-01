@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLAY_GROUNDS_FOR_PROJECT.CSharp", "PLAY_GROUNDS_FOR_PROJECT.CSharp.csproj", "{A20113A9-58CF-B8C9-3E9E-6FE3E909916F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A20113A9-58CF-B8C9-3E9E-6FE3E909916F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A20113A9-58CF-B8C9-3E9E-6FE3E909916F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A20113A9-58CF-B8C9-3E9E-6FE3E909916F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A20113A9-58CF-B8C9-3E9E-6FE3E909916F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
