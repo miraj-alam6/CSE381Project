@@ -64,7 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
-    <Compile Include="Assets\Scripts\Enviroment\MovingPlatform.cs" />
+    <Compile Include="Assets\Scripts\Enviroment\MovingStructure.cs" />
     <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
     <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\GameObjects\FPSController.cs" />
