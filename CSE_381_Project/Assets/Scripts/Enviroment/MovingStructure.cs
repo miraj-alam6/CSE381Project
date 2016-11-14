@@ -24,7 +24,9 @@ public class MovingStructure : MonoBehaviour {
     float[] pathGoalTimeLeft;
 
 
+    public int defaultPathIndex;
     //int pathIndex :this says which path the platform will be following, as in which pair of points
+    //The following should no longer be set in the inspector, still public for debugging purposes
     public int pathIndex; 
     public Transform trans;
 
@@ -34,6 +36,7 @@ public class MovingStructure : MonoBehaviour {
     //Also set up which two points will be used for the current path
     void Start() {
         trans = GetComponent<Transform>();
+        pathIndex = defaultPathIndex;
         setupActivePoints(pathIndex);
         //Set up waiting times:
         pathGoalTimeLeft = new float[pathGoalWaitingTimes.Length];
