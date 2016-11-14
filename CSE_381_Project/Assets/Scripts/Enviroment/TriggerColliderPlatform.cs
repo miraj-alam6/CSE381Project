@@ -2,13 +2,13 @@
 using System.Collections;
 
 public class TriggerColliderPlatform : MonoBehaviour {
-    public MovingPlatform platformParent;
+    public MovingStructure platformParent;
 
     void OnTriggerStay(Collider other)
     {
         if (other.tag.Equals("Player"))
         {
-            Debug.Log("on platform");
+            //Debug.Log("on platform");
             other.gameObject.transform.parent = platformParent.gameObject.transform;
         }
     }
@@ -18,7 +18,7 @@ public class TriggerColliderPlatform : MonoBehaviour {
         if (other.tag.Equals("Player"))
         {
             other.gameObject.transform.parent = null;
-            Debug.Log("left platform");
+           // Debug.Log("left platform");
         }
     }
 }

@@ -5,10 +5,10 @@ public class MoveShapeUI : MonoBehaviour {
     Transform currentTrans;
     Vector3 goalTransPosition;
     public float speed;
-    public float startX;
-    public float startY;
-    public float goalX;
-    public float goalY;
+    float startX;
+    float startY;
+    float goalX;
+    float goalY;
     public float waitInterval;
     float timeCounter = 0;
 	// Use this for initialization
