@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ButtonEventHandler : MonoBehaviour {
 
@@ -34,4 +35,8 @@ public class ButtonEventHandler : MonoBehaviour {
 		currentScreen = howToPlayScreen;
 	}
 
+	public void LoadNewGame(){
+		print ("CLICKED");
+		SceneManager.LoadScene ("_scenes/TestLevel");
+	}
 }
