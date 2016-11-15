@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ButtonEventHandler.cs" />
     <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Enviroment\Artifact.cs" />
     <Compile Include="Assets\Scripts\Enviroment\MovingStructure.cs" />
