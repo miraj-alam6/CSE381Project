@@ -10,25 +10,20 @@ public class PickUp : MonoBehaviour
 
     //Object currently being held
     GameObject heldObject = null;
+	GameObject obelisk = null;
+	GameObject slot = null;
 
     //Distance you can pick up objects from (the length of the raycast which allows you to pick up objects)
     public float rayLength = 3.0f;
 
+	//How much the player must be facing an obelisk to insert an artifact, 1 is directly facing, -1 is directly away
+	public float amountFacingObelisk = 0.85f;
+
     //Distance the object is held from the player
     public float holdDistance = 3.0f;
-    public float dropDistance = 0.1f;
+
     //Speed at which the piece is rotated by QERF key presses
     public float rotateSpeed = 200.0f;
-
-    float heldRotX;
-    float heldRotY;
-    float heldRotZ;
-
-
-    //TODO: Move this into a class called artifact:
-    public float startRotX;
-    public float startRotY;
-    public float startRotZ;
 
     void Update()
     {
@@ -41,7 +36,7 @@ public class PickUp : MonoBehaviour
             //Stops velocity collection when object bumps into things
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            print(getRotations());
+            //print(getRotations());
         }
         //Pick up/drop object
         if (Input.GetKeyDown(KeyCode.T))
@@ -65,16 +60,27 @@ public class PickUp : MonoBehaviour
                 dropObject();
             }
         }
+
+		if (Input.GetKeyDown (KeyCode.V)) {	
+			if (heldObject != null && slot != null) {
+				float dotProduct = Vector3.Dot(Camera.main.transform.forward, 
+					(obelisk.transform.position - Camera.main.transform.position).normalized);
+				if (dotProduct >= amountFacingObelisk) {
+					//Facing obelisk, inside valid place trigger, while holding an artifact currently
+					insertArtifact ();
+				}
+			}
+		}
     }
 
     void checkDistance()
     {
         if (heldObject != null)
         {   //Check the distance from camera to held object, if it's greater than the max hold distance plus a buffer of 0.5, drop it
-            if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) > holdDistance + dropDistance)
+            if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) > holdDistance + 0.5f)
             {
                 dropObject();
-            } else if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) < holdDistance - dropDistance)
+            } else if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) < holdDistance / 2.0f)
             {
                 dropObject();
             }
@@ -91,33 +97,35 @@ public class PickUp : MonoBehaviour
             return;
         }
         else
-        {
-            heldObject = hitObject;
-            heldObject.GetComponent<Rigidbody>().useGravity = false;
-            //This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
-            heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
-            heldObject.transform.parent = Camera.main.transform;
-            //This is bad: Because it is a rigid body, it's rotation gets affected
-            //heldObject.transform.localRotation = new Quaternion(heldObject.transform.localRotation.x, heldObject.transform.localRotation.y, heldObject.transform.localRotation.z, heldObject.transform.localRotation.w);
-            heldObject.transform.localRotation = Quaternion.Euler(0,0,0);
-            heldObject = hitObject;
-            if (heldObject.GetComponent<Artifact>()) {
-                heldObject.GetComponent<Artifact>().turnOnConstraints();
-            }
-            //Need to prevent Gimbal Lock I think, so I'm using my own
-            //x y and z that are maintained
-            heldRotX = heldObject.transform.localEulerAngles.x;
-            heldRotY = heldObject.transform.localEulerAngles.y;
-            heldRotZ = heldObject.transform.localEulerAngles.z;
+		{	
+			if(hitObject.transform.parent != null){
+				if(hitObject.transform.parent.tag.Equals("Slot")){
+					Slot artifactSlot = hitObject.transform.parent.GetComponent<Slot>();
+					//If it is not inserting
+					if (!artifactSlot.getIsInserting()) {
+						heldObject = hitObject;
+						heldObject.GetComponent<Rigidbody>().useGravity = false;
+						heldObject.GetComponent<Rigidbody> ().isKinematic = false;
+						heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+						heldObject.transform.parent = Camera.main.transform;
+						heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+						heldObject = hitObject;
+					}
+				}
+			}else {
+            	heldObject = hitObject;
+            	heldObject.GetComponent<Rigidbody>().useGravity = false;
+            	//This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
+            	heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+            	heldObject.transform.parent = Camera.main.transform;
+            	heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+            	heldObject = hitObject;
+			}
         }
     }
 
-    void dropObject()
+    public void dropObject()
     {
-        if (heldObject.GetComponent<Artifact>())
-        {
-            heldObject.GetComponent<Artifact>().turnOffConstraints();
-        }
         heldObject.GetComponent<Rigidbody>().useGravity = true;
         heldObject.transform.parent = null;
         heldObject = null;
@@ -127,63 +135,20 @@ public class PickUp : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.Q))
         {
-            heldRotZ -= rotateSpeed * Time.deltaTime;
-           // Debug.Log("" + (rotateSpeed * Time.deltaTime) + "," +
-           //  +
-           // (heldObject.transform.localEulerAngles.x - rotateSpeed * Time.deltaTime) + "," + heldRotX);
-
-           
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
+            heldObject.transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
         } else if (!Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.Q))
         {
-            heldRotZ += rotateSpeed * Time.deltaTime;
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
-
+            heldObject.transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.R) && !Input.GetKey(KeyCode.F))
         {
-            heldRotY -= rotateSpeed * Time.deltaTime;
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
+            heldObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
         }
         else if (!Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.F))
         {
-            heldRotY += rotateSpeed * Time.deltaTime;
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
-
+            heldObject.transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime);
         }
-        /*
-        if (Input.GetKey(KeyCode.V) && !Input.GetKey(KeyCode.B))
-        {
-            heldRotZ -= rotateSpeed * Time.deltaTime;
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
-
-        }
-        else if (!Input.GetKey(KeyCode.B) && Input.GetKey(KeyCode.V))
-        {
-            heldRotZ += rotateSpeed * Time.deltaTime;
-            heldObject.transform.localRotation =
-                Quaternion.Euler(heldRotX,
-                heldRotY,
-                heldRotZ);
-
-        }
-        */
     }
 
     Vector3 getRotations() {
@@ -197,4 +162,24 @@ public class PickUp : MonoBehaviour
             return new Vector3(-1, -1, -1);
         }
     }
+
+	void OnTriggerStay(Collider other){
+		//If player is within obelisk collider
+		if(other.tag.Equals("Slot")){
+			slot = other.gameObject;
+			obelisk = slot.transform.parent.gameObject;
+		}
+	}
+
+	void OnTriggerExit(Collider other){
+		if (slot != null && other.gameObject.Equals (slot)) {
+			slot = null;
+			obelisk = null;
+		}
+	}
+
+	void insertArtifact(){
+		Slot slotScript = slot.GetComponent<Slot> ();
+		slotScript.handleArtifact (heldObject);
+	}
 }

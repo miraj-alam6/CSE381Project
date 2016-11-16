@@ -2,26 +2,14 @@
 using System.Collections;
 
 public class Artifact : MonoBehaviour {
-    public string name;
-    Rigidbody rb;
+    public string artifactName;
 	// Use this for initialization
 	void Start () {
-        rb = GetComponent<Rigidbody>();
+		artifactName = "Default";
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
-
-    public void turnOffConstraints()
-    {
-        rb.constraints = RigidbodyConstraints.None;
-    }
-
-    public void turnOnConstraints()
-    {
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
-            | RigidbodyConstraints.FreezeRotationX;
-    }
 }
