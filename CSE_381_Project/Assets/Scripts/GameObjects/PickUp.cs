@@ -21,9 +21,13 @@ public class PickUp : MonoBehaviour
 
     //Distance the object is held from the player
     public float holdDistance = 3.0f;
-
+    public float dropDistance = 0.1f;
     //Speed at which the piece is rotated by QERF key presses
     public float rotateSpeed = 200.0f;
+
+    float heldRotX;
+    float heldRotY;
+    float heldRotZ;
 
     void Update()
     {
@@ -39,7 +43,7 @@ public class PickUp : MonoBehaviour
             //print(getRotations());
         }
         //Pick up/drop object
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetButtonDown("Fire2"))
         {
             //Draw ray for testing purposes
             Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
@@ -51,7 +55,10 @@ public class PickUp : MonoBehaviour
                 //If the raycast hits, try to pick up the object (dependent on if it has a valid tag)
                 if (Physics.Raycast(ray, out hit, rayLength))
                 {
-                    pickUpObject(hit);
+                   // float rayDistance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
+                   // if (rayDistance > 3) { 
+                        pickUpObject(hit);
+                   // }
                 }
             }
             //If holding an object, drop it 
@@ -61,7 +68,7 @@ public class PickUp : MonoBehaviour
             }
         }
 
-		if (Input.GetKeyDown (KeyCode.V)) {	
+		if (Input.GetButtonDown("Fire1")) {	
 			if (heldObject != null && slot != null) {
 				float dotProduct = Vector3.Dot(Camera.main.transform.forward, 
 					(obelisk.transform.position - Camera.main.transform.position).normalized);
@@ -77,10 +84,10 @@ public class PickUp : MonoBehaviour
     {
         if (heldObject != null)
         {   //Check the distance from camera to held object, if it's greater than the max hold distance plus a buffer of 0.5, drop it
-            if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) > holdDistance + 0.5f)
+            if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) > holdDistance + dropDistance)
             {
                 dropObject();
-            } else if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) < holdDistance / 2.0f)
+            } else if (Vector3.Distance(Camera.main.transform.position, heldObject.transform.position) < holdDistance - dropDistance)
             {
                 dropObject();
             }
@@ -101,31 +108,46 @@ public class PickUp : MonoBehaviour
 			if(hitObject.transform.parent != null){
 				if(hitObject.transform.parent.tag.Equals("Slot")){
 					Slot artifactSlot = hitObject.transform.parent.GetComponent<Slot>();
-					//If it is not inserting
-					if (!artifactSlot.getIsInserting()) {
+                    //If it is not inserting
+                    float removeDistance = Vector3.Distance(Camera.main.transform.position, hitObject.transform.position);
+                    if (!artifactSlot.getIsInserting() && removeDistance > 4.5) {
+
 						heldObject = hitObject;
-						heldObject.GetComponent<Rigidbody>().useGravity = false;
+                        heldObject.GetComponent<Artifact>().turnOnConstraints();
+                        heldObject.GetComponent<Rigidbody>().useGravity = false;
 						heldObject.GetComponent<Rigidbody> ().isKinematic = false;
 						heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
 						heldObject.transform.parent = Camera.main.transform;
-						heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+						heldObject.transform.localRotation = new Quaternion(0.0f, 0, 0, heldObject.transform.rotation.w);
 						heldObject = hitObject;
+                        heldRotX = 0;
+                        heldRotY = 0;
+                        heldRotZ = 0;
+                       
+                        artifactSlot.artifactRemoved();
 					}
 				}
 			}else {
             	heldObject = hitObject;
-            	heldObject.GetComponent<Rigidbody>().useGravity = false;
+                heldObject.GetComponent<Artifact>().turnOnConstraints();
+                heldObject.GetComponent<Rigidbody>().useGravity = false;
             	//This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
             	heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
             	heldObject.transform.parent = Camera.main.transform;
-            	heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+            	heldObject.transform.localRotation = new Quaternion(0.0f, 0, 0, heldObject.transform.rotation.w);
             	heldObject = hitObject;
-			}
+
+                heldRotX = 0;
+                heldRotY = 0;
+                heldRotZ = 0;
+
+            }
         }
     }
 
     public void dropObject()
     {
+        heldObject.GetComponent<Artifact>().turnOffConstraints();
         heldObject.GetComponent<Rigidbody>().useGravity = true;
         heldObject.transform.parent = null;
         heldObject = null;
@@ -135,20 +157,41 @@ public class PickUp : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E) && !Input.GetKey(KeyCode.Q))
         {
-            heldObject.transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
-        } else if (!Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.Q))
+            heldRotZ -= rotateSpeed * Time.deltaTime;
+
+            heldObject.transform.localRotation =
+                Quaternion.Euler(heldRotX,
+                heldRotY,
+                heldRotZ);
+        }
+        else if (!Input.GetKey(KeyCode.E) && Input.GetKey(KeyCode.Q))
         {
-            heldObject.transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
+            heldRotZ += rotateSpeed * Time.deltaTime;
+            heldObject.transform.localRotation =
+                Quaternion.Euler(heldRotX,
+                heldRotY,
+                heldRotZ);
+
         }
 
         if (Input.GetKey(KeyCode.R) && !Input.GetKey(KeyCode.F))
         {
-            heldObject.transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
+            heldRotY -= rotateSpeed * Time.deltaTime;
+            heldObject.transform.localRotation =
+                Quaternion.Euler(heldRotX,
+                heldRotY,
+                heldRotZ);
         }
         else if (!Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.F))
         {
-            heldObject.transform.Rotate(Vector3.down * rotateSpeed * Time.deltaTime);
+            heldRotY += rotateSpeed * Time.deltaTime;
+            heldObject.transform.localRotation =
+                Quaternion.Euler(heldRotX,
+                heldRotY,
+                heldRotZ);
+
         }
+      
     }
 
     Vector3 getRotations() {

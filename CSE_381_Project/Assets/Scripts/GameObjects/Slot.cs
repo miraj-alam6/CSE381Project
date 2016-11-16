@@ -81,7 +81,7 @@ public class Slot : MonoBehaviour {
 		artifact.transform.parent = this.transform;
 		artifactObject = artifact;
 		isInserting = true;
-		parentObelisk.processStateChange(actionNumber);
+		
 	}
 
 
@@ -111,8 +111,13 @@ public class Slot : MonoBehaviour {
 			insertTarget.transform.position, Time.deltaTime * speed);
 		if (Vector3.Distance (artifactObject.transform.position, insertTarget.transform.position) <= 0.1) {
 			isInserting = false;
-		}
+            parentObelisk.processStateChange(0);
+        }
 	}
+
+    public void artifactRemoved() {
+        parentObelisk.processStateChange(1);
+    }
 
 
     /*public void OnTriggerStay(Collider other) {
