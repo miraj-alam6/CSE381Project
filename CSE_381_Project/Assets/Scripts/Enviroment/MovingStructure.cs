@@ -49,6 +49,7 @@ public class MovingStructure : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        /*
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
             setupActivePoints(0);
         }
@@ -60,6 +61,7 @@ public class MovingStructure : MonoBehaviour {
         {
             setupActivePoints(2);
         }
+        */
         if (activated) { 
             move();
         }
