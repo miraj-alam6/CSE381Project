@@ -46,13 +46,15 @@ public class Slot : MonoBehaviour {
 
     public void OnTriggerStay(Collider other) {
         if (Input.GetButtonDown("Fire1")) {
-            parent.processStateChange(actionNumber);
+            parent.processStateChange(0);
+            //parent.processStateChange(actionNumber);
         }
 
         if (Input.GetButtonDown("Fire2"))
         {
-            Debug.Log("Let me borrow");
-            parent.processStateChange(-actionNumber);
+            //Debug.Log("Let me borrow");
+            parent.processStateChange(1);
+            //parent.processStateChange(-actionNumber);
         }
     }
 

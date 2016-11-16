@@ -86,6 +86,11 @@ public class FPSController : MonoBehaviour
         if (cc.isGrounded)
         {
             verticalVelocity = 0;
+            //Flying cheat
+            if (Input.GetKey(KeyCode.M))
+            {
+                verticalVelocity = jumpSpeed;
+            }
             if (Input.GetButtonDown("Jump"))
             {
 
@@ -94,13 +99,30 @@ public class FPSController : MonoBehaviour
         }
 
         //if not on ground, increase vertical velocity
-        else { 
-            verticalVelocity += (Physics.gravity.y) * Time.deltaTime; //add 9.81 every second
-          //  Debug.Log(verticalVelocity);
+        else {
+            //Flying cheat
+            if (Input.GetKey(KeyCode.M))
+            {
+                verticalVelocity = jumpSpeed;
+            }
+            else { 
+                verticalVelocity += (Physics.gravity.y) * Time.deltaTime; //add 9.81 every second
+            }
+            //  Debug.Log(verticalVelocity);
         }
         //Handle jumping
 
 
+        //Check jumping again
+        if (cc.isGrounded)
+        {
+            verticalVelocity = 0;
+            if (Input.GetButtonDown("Jump"))
+            {
+
+                verticalVelocity = jumpSpeed;
+            }
+        }
         Vector3 speedVector = new Vector3(strafeSpeed, verticalVelocity, forwardSpeed); //forward movement is across z axis 
 
         //Before moving, apply the rotation so that pressing forward and such will actually make
