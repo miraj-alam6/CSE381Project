@@ -10,9 +10,14 @@ public class PickUp : MonoBehaviour
 
     //Object currently being held
     GameObject heldObject = null;
+	GameObject obelisk = null;
+	GameObject slot = null;
 
     //Distance you can pick up objects from (the length of the raycast which allows you to pick up objects)
     public float rayLength = 3.0f;
+
+	//How much the player must be facing an obelisk to insert an artifact, 1 is directly facing, -1 is directly away
+	public float amountFacingObelisk = 0.85f;
 
     //Distance the object is held from the player
     public float holdDistance = 3.0f;
@@ -31,7 +36,7 @@ public class PickUp : MonoBehaviour
             //Stops velocity collection when object bumps into things
             heldObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             heldObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            print(getRotations());
+            //print(getRotations());
         }
         //Pick up/drop object
         if (Input.GetKeyDown(KeyCode.T))
@@ -55,6 +60,17 @@ public class PickUp : MonoBehaviour
                 dropObject();
             }
         }
+
+		if (Input.GetKeyDown (KeyCode.V)) {	
+			if (heldObject != null && slot != null) {
+				float dotProduct = Vector3.Dot(Camera.main.transform.forward, 
+					(obelisk.transform.position - Camera.main.transform.position).normalized);
+				if (dotProduct >= amountFacingObelisk) {
+					//Facing obelisk, inside valid place trigger, while holding an artifact currently
+					insertArtifact ();
+				}
+			}
+		}
     }
 
     void checkDistance()
@@ -81,18 +97,34 @@ public class PickUp : MonoBehaviour
             return;
         }
         else
-        {
-            heldObject = hitObject;
-            heldObject.GetComponent<Rigidbody>().useGravity = false;
-            //This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
-            heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
-            heldObject.transform.parent = Camera.main.transform;
-            heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
-            heldObject = hitObject;
+		{	
+			if(hitObject.transform.parent != null){
+				if(hitObject.transform.parent.tag.Equals("Slot")){
+					Slot artifactSlot = hitObject.transform.parent.GetComponent<Slot>();
+					//If it is not inserting
+					if (!artifactSlot.getIsInserting()) {
+						heldObject = hitObject;
+						heldObject.GetComponent<Rigidbody>().useGravity = false;
+						heldObject.GetComponent<Rigidbody> ().isKinematic = false;
+						heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+						heldObject.transform.parent = Camera.main.transform;
+						heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+						heldObject = hitObject;
+					}
+				}
+			}else {
+            	heldObject = hitObject;
+            	heldObject.GetComponent<Rigidbody>().useGravity = false;
+            	//This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
+            	heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+            	heldObject.transform.parent = Camera.main.transform;
+            	heldObject.transform.localRotation = new Quaternion(0.0f, heldObject.transform.rotation.y, heldObject.transform.rotation.z, heldObject.transform.rotation.w);
+            	heldObject = hitObject;
+			}
         }
     }
 
-    void dropObject()
+    public void dropObject()
     {
         heldObject.GetComponent<Rigidbody>().useGravity = true;
         heldObject.transform.parent = null;
@@ -130,4 +162,24 @@ public class PickUp : MonoBehaviour
             return new Vector3(-1, -1, -1);
         }
     }
+
+	void OnTriggerStay(Collider other){
+		//If player is within obelisk collider
+		if(other.tag.Equals("Slot")){
+			slot = other.gameObject;
+			obelisk = slot.transform.parent.gameObject;
+		}
+	}
+
+	void OnTriggerExit(Collider other){
+		if (slot != null && other.gameObject.Equals (slot)) {
+			slot = null;
+			obelisk = null;
+		}
+	}
+
+	void insertArtifact(){
+		Slot slotScript = slot.GetComponent<Slot> ();
+		slotScript.handleArtifact (heldObject);
+	}
 }
