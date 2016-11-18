@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\GameObjects\SimpleObelisk.cs" />
     <Compile Include="Assets\Scripts\GameObjects\Slot.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\Victory.cs" />
     <Compile Include="Assets\Scripts\Menu\ButtonEventHandler.cs" />
     <Compile Include="Assets\Scripts\Menu\MoveShapeUI.cs" />
   </ItemGroup>

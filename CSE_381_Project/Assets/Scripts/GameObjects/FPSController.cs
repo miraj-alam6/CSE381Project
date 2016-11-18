@@ -11,6 +11,7 @@ public class FPSController : MonoBehaviour
     public float speed = 5.0f;
     public float mouseSensitivity = 5.0f;
     public float jumpSpeed;
+    public bool canJump = true;
     //Vector3 velocity = Vector3.zero; //This is for our bookkeeping so that we can deal with gravity
     //moved this up here as opposed to later
     float verticalVelocity = 0; //Just need this for bookkeeping velocity because only thing physics based
@@ -78,25 +79,45 @@ public class FPSController : MonoBehaviour
         float forwardSpeed = speed * Input.GetAxis("Vertical"); //to move forward AND backward(if negative)
         float strafeSpeed = speed * Input.GetAxis("Horizontal"); //to move right and left(if negative)
 
-        
+
         // Vector3 speedVector = new Vector3(strafeSpeed, Physics.gravity.y, forwardSpeed); //forward movement is across z axis 
         //above is wrong because gravity is not constant.
 
-        //Check if you are touching the ground.
-        if (cc.isGrounded)
+        if (Input.GetKey(KeyCode.V))
         {
-            verticalVelocity = 0;
-            if (Input.GetButtonDown("Jump"))
-            {
-
-                verticalVelocity = jumpSpeed;
-            }
+            verticalVelocity = jumpSpeed * 2;
         }
 
-        //if not on ground, increase vertical velocity
-        else { 
-            verticalVelocity += (Physics.gravity.y) * Time.deltaTime; //add 9.81 every second
-          //  Debug.Log(verticalVelocity);
+        if (Input.GetButton("Jump"))
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            //Check if you are touching the ground.
+            if (cc.isGrounded && canJump)
+            {
+                verticalVelocity = jumpSpeed;
+                canJump = false;
+            }
+
+            else {
+                verticalVelocity += (Physics.gravity.y * 2) * Time.deltaTime;
+            }
+            
+            
+
+        }
+
+        //if not pressing jump button, you can press it again to try to jump
+        else {
+           
+            if (cc.isGrounded) {
+                canJump = true;
+            }
+
+            //Gravity
+            else {
+                verticalVelocity += (Physics.gravity.y * 2) * Time.deltaTime; //add 9.81 every second
+            }
+            //  Debug.Log(verticalVelocity);
         }
         //Handle jumping
 

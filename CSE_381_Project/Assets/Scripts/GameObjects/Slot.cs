@@ -38,7 +38,7 @@ public class Slot : MonoBehaviour {
 				totalAngleDifference += getAngleDifference (v.y, artifactVec.y);
 				totalAngleDifference += getAngleDifference (v.z, artifactVec.z);
 
-				print (totalAngleDifference);
+				//print (totalAngleDifference);
 				//If the total difference is less than or equal to the allowed uncertainty, the artifact can be inserted
 				if (angleUncertainty >= totalAngleDifference) {
 					matchedConfig = v;
