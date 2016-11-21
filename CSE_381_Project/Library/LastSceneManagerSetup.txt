@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_scenes/Alden's Level.unity
+- path: Assets/_scenes/TutorialLevel.unity
   isLoaded: 1
   isActive: 1
