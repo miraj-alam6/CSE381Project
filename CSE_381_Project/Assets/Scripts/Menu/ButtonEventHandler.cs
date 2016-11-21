@@ -37,6 +37,6 @@ public class ButtonEventHandler : MonoBehaviour {
 
 	public void LoadNewGame(){
 		print ("CLICKED");
-		SceneManager.LoadScene ("_scenes/TestLevel");
+		SceneManager.LoadScene ("_scenes/TutorialLevel");
 	}
 }

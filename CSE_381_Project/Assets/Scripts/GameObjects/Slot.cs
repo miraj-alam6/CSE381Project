@@ -38,7 +38,7 @@ public class Slot : MonoBehaviour {
 				totalAngleDifference += getAngleDifference (v.y, artifactVec.y);
 				totalAngleDifference += getAngleDifference (v.z, artifactVec.z);
 
-				print (totalAngleDifference);
+				//print (totalAngleDifference);
 				//If the total difference is less than or equal to the allowed uncertainty, the artifact can be inserted
 				if (angleUncertainty >= totalAngleDifference) {
 					matchedConfig = v;
@@ -75,13 +75,14 @@ public class Slot : MonoBehaviour {
 	void insertArtifact(GameObject artifact){
 		//Have player 'drop' the artifact, de-parenting it and clearing appropriate data fields
 		artifact.transform.localEulerAngles = matchedConfig;
+        Debug.Log(matchedConfig);
 		artifact.transform.parent.GetComponent<PickUp> ().dropObject ();
-
+        artifact.GetComponent<Artifact>().lastConfig = matchedConfig;
 		artifact.GetComponent<Rigidbody> ().isKinematic = true;
 		artifact.transform.parent = this.transform;
 		artifactObject = artifact;
 		isInserting = true;
-		parentObelisk.processStateChange(actionNumber);
+		
 	}
 
 
@@ -111,8 +112,13 @@ public class Slot : MonoBehaviour {
 			insertTarget.transform.position, Time.deltaTime * speed);
 		if (Vector3.Distance (artifactObject.transform.position, insertTarget.transform.position) <= 0.1) {
 			isInserting = false;
-		}
+            parentObelisk.processStateChange(0);
+        }
 	}
+
+    public void artifactRemoved() {
+        parentObelisk.processStateChange(1);
+    }
 
 
     /*public void OnTriggerStay(Collider other) {
