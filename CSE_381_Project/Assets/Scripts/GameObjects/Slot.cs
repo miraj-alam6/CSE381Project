@@ -75,8 +75,9 @@ public class Slot : MonoBehaviour {
 	void insertArtifact(GameObject artifact){
 		//Have player 'drop' the artifact, de-parenting it and clearing appropriate data fields
 		artifact.transform.localEulerAngles = matchedConfig;
+        Debug.Log(matchedConfig);
 		artifact.transform.parent.GetComponent<PickUp> ().dropObject ();
-
+        artifact.GetComponent<Artifact>().lastConfig = matchedConfig;
 		artifact.GetComponent<Rigidbody> ().isKinematic = true;
 		artifact.transform.parent = this.transform;
 		artifactObject = artifact;
