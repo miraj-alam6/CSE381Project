@@ -110,6 +110,7 @@ public class FPSController : MonoBehaviour
         else {
            
             if (cc.isGrounded) {
+                verticalVelocity = 0;
                 canJump = true;
             }
 
