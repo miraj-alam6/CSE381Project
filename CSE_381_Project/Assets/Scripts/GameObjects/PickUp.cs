@@ -13,6 +13,9 @@ public class PickUp : MonoBehaviour
     Artifact heldArtifact = null; //this is just the artifact script for the held object
 	GameObject obelisk = null;
 	GameObject slot = null;
+    public AudioClip rotatePieceSound;
+    public AudioClip correctRoationSound;
+    public AudioClip wrongRoationSound;
 
     //Distance you can pick up objects from (the length of the raycast which allows you to pick up objects)
     public float rayLength = 3.0f;
@@ -35,9 +38,18 @@ public class PickUp : MonoBehaviour
     float primaryRotateGoalY; 
     //When you are doing a primary rotation, prevent any other rotation from happening
     public bool primaryRotating;
-    public bool primaryRotatingClockwise; //this is 
+    public bool primaryRotatingClockwise; //this is
+    public bool active = true;
+
+    void Start() {
+        GameManager.instance.setPlayerPickup(this);
+    }
+
     void Update()
     {
+        if (!active) {
+            return;
+        }
         //If the heldObject is too far from the player, drop it
         checkDistance();
         if (heldObject != null)
@@ -128,7 +140,7 @@ public class PickUp : MonoBehaviour
                 //If it is not inserting
                 float removeDistance = Vector3.Distance(Camera.main.transform.position, hitObject.transform.position);
                 if (!artifactSlot.getIsInserting() && removeDistance > minRemoveDistance) {
-
+                    SoundManager.instance.removePiece();
 					heldObject = hitObject;
                     heldArtifact = heldObject.GetComponent<Artifact>();
                     heldArtifact.turnOnConstraints();
@@ -144,12 +156,12 @@ public class PickUp : MonoBehaviour
 					heldObject = hitObject;
 
                     heldArtifact.setSpringDistance(holdDistance);
-                    
-                    heldObject.transform.localRotation = new Quaternion(
-                        heldArtifact.lastConfig.x,
-                        heldArtifact.lastConfig.y,
-                        heldArtifact.lastConfig.z, 
-                        heldObject.transform.rotation.w);
+                    heldRotX = heldArtifact.lastConfig.x;
+                    heldRotY = heldArtifact.lastConfig.y;
+                    heldRotZ = heldArtifact.lastConfig.z;
+                    //for some reason, if I don't do localEulerAngles here, it messes up
+                    //if i try to just use localAngles and use a Quaternion
+                    heldObject.transform.localEulerAngles = heldArtifact.lastConfig;
                     artifactSlot.artifactRemoved();
 					
 				}
@@ -216,12 +228,14 @@ public class PickUp : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Q) && !Input.GetKey(KeyCode.E))
             {
+                SoundManager.instance.rotatePiece();
                 primaryRotateGoalY = heldRotY + 90;
                 primaryRotating = true;
                 primaryRotatingClockwise = true;
             }
             else if (!Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.E))
             {
+                SoundManager.instance.rotatePiece();
                 primaryRotateGoalY = heldRotY - 90;
                 primaryRotating = true;
                 primaryRotatingClockwise = false;

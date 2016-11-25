@@ -26,8 +26,11 @@ public class Slot : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (isInserting) {
-			moveArtifactIntoSlot ();
-		}
+            //#MIRAJ added this to deal with pausing
+            if (artifactObject.GetComponent<Artifact>().active) { 
+			    moveArtifactIntoSlot();
+            }
+        }
 	}
 
     public bool CheckConfiguration(float nameIndex, Vector3 artifactVec) {
@@ -58,18 +61,22 @@ public class Slot : MonoBehaviour {
 		//Returns -1 if it does not find the name
 		int nameIndex = System.Array.IndexOf(artifactNames, name);
 		//If the name is not found, return
-		if (nameIndex < 0) {	
-			//print ("bad name index");
-			return;
+		if (nameIndex < 0) {
+            SoundManager.instance.rejectPiece();
+            //print ("bad name index");
+            return;
 		}
 		//Returns if artifact angles do not match any of the presets (that share it's name-index)
-		if(!CheckConfiguration (nameIndex, artifactAngles)) {	
-			//print ("bad config index");
-			return;
+		if(!CheckConfiguration (nameIndex, artifactAngles)) {
+            //print ("bad config index");
+            SoundManager.instance.rejectPiece();
+            return;
 		}
 
+        SoundManager.instance.acceptPiece();
 		//Valid artifact name/angles 
 		insertArtifact(heldObject);
+        
 	}
 
 	void insertArtifact(GameObject artifact){
