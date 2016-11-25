@@ -50,6 +50,8 @@
      <Compile Include="Assets\Scripts\Enviroment\MovingStructure.cs" />
      <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\CannonBall.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\CannonFire.cs" />
      <Compile Include="Assets\Scripts\GameObjects\FPSController.cs" />
      <Compile Include="Assets\Scripts\GameObjects\FPSShoot.cs" />
      <Compile Include="Assets\Scripts\GameObjects\MainCamera.cs" />
@@ -58,8 +60,10 @@
      <Compile Include="Assets\Scripts\GameObjects\SimpleObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\Slot.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\Victory.cs" />
      <Compile Include="Assets\Scripts\Menu\ButtonEventHandler.cs" />
      <Compile Include="Assets\Scripts\Menu\MoveShapeUI.cs" />
+     <Compile Include="Assets\Scripts\Menu\PauseMenuButtonEventHandler.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
