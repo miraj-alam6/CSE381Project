@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TriggerColliderPlatform : MonoBehaviour {
+public class TriggerColliderPlatform : MonoBehaviour
+{
     public MovingStructure platformParent;
 
     void OnTriggerStay(Collider other)
@@ -11,6 +12,19 @@ public class TriggerColliderPlatform : MonoBehaviour {
             //Debug.Log("on platform");
             other.gameObject.transform.parent = platformParent.gameObject.transform;
         }
+
+
+        //Only parent the artifact to this if it is not already parented AKA if it's not
+        //already being held by the player
+        if (other.tag.Equals("Artifact"))
+        {
+            if (other.gameObject.transform.parent == null)
+            {
+                other.gameObject.transform.parent = platformParent.gameObject.transform;
+            }
+            //Debug.Log("on platform");
+
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -18,9 +32,8 @@ public class TriggerColliderPlatform : MonoBehaviour {
         if (other.tag.Equals("Player"))
         {
             other.gameObject.transform.parent = null;
-           // Debug.Log("left platform");
+            // Debug.Log("left platform");
         }
-<<<<<<< HEAD
         if (other.tag.Equals("Artifact"))
         {
             if (other.gameObject.transform.parent.tag != null &&
@@ -30,7 +43,5 @@ public class TriggerColliderPlatform : MonoBehaviour {
                 other.gameObject.transform.parent = null;
             }
         }
-=======
->>>>>>> d5b5554e00396d45d3ccdf08a525d44f2a149cd0
     }
 }

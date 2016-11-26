@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Enviroment\MovingStructure.cs" />
     <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
     <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\CannonBall.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\CannonFire.cs" />
     <Compile Include="Assets\Scripts\GameObjects\FPSController.cs" />
     <Compile Include="Assets\Scripts\GameObjects\FPSShoot.cs" />
     <Compile Include="Assets\Scripts\GameObjects\MainCamera.cs" />
@@ -81,6 +83,7 @@
     <Compile Include="Assets\Scripts\Managers\Victory.cs" />
     <Compile Include="Assets\Scripts\Menu\ButtonEventHandler.cs" />
     <Compile Include="Assets\Scripts\Menu\MoveShapeUI.cs" />
+    <Compile Include="Assets\Scripts\Menu\PauseMenuButtonEventHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
