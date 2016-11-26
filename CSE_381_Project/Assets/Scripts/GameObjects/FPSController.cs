@@ -18,9 +18,11 @@ public class FPSController : MonoBehaviour
     float rotPitch = 0;
     public float rotatePitchRange = 60.0f; // represents 60 degrees
                                            // Use this for initialization
+    public bool active = true;
     CharacterController cc;
     void Start()
     {
+        GameManager.instance.setPlayerController(this);
         Cursor.lockState = CursorLockMode.Locked;
         cc  = GetComponent<CharacterController>();
     }
@@ -52,6 +54,9 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!active) {
+            return;
+        }
         //How to Rotate
         //Left right rotation
         float rotYaw = Input.GetAxis("Mouse X") * mouseSensitivity; //
@@ -110,6 +115,15 @@ public class FPSController : MonoBehaviour
         else {
            
             if (cc.isGrounded) {
+                //If you are grounded and moving, do moving sound effect
+                if (strafeSpeed != 0 || forwardSpeed != 0)
+                {
+                    SoundManager.instance.footStep();
+                }
+                else {
+                    SoundManager.instance.stopStep();
+                }
+                verticalVelocity = 0;
                 canJump = true;
             }
 
@@ -124,6 +138,7 @@ public class FPSController : MonoBehaviour
 
         Vector3 speedVector = new Vector3(strafeSpeed, verticalVelocity, forwardSpeed); //forward movement is across z axis 
 
+        
         //Before moving, apply the rotation so that pressing forward and such will actually make
         //you go forward
         //IMPORTANT: this gives an error speedVector = speedVector * transform.rotation;
@@ -131,6 +146,7 @@ public class FPSController : MonoBehaviour
         //matrix operations work.
         speedVector = transform.rotation * speedVector;
 
+        
         //cc.SimpleMove(speedVector); //Simple move is fine for when you have no jumping
         //Using Move will mean no more auto gravity, you need to write some code, the exact code is above
         //in this file 

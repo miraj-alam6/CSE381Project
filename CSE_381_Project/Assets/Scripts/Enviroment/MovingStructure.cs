@@ -35,6 +35,7 @@ public class MovingStructure : MonoBehaviour {
     // Initializes the game object to get its Transform component
     //Also set up which two points will be used for the current path
     void Start() {
+        GameManager.instance.addMovingStructure(this);
         trans = GetComponent<Transform>();
         pathIndex = defaultPathIndex;
         setupActivePoints(pathIndex);

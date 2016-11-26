@@ -19,15 +19,29 @@ public class Artifact : MonoBehaviour {
     //you get a viable configuration rather than a strange angle from the localEuler
     //make sure you can't drop the piece when the space is 0
     Collider col;
-    
-
+    public Vector3 velocityBeforeSleep;
     //this boolean tells it to do it
 
     // Use this for initialization
     void Start() {
-
+        GameManager.instance.addArtifact(this);
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+    }
+
+    public void pauseArtifact() {
+        //rb.useGravity = false;
+        active = false;
+        velocityBeforeSleep = rb.velocity;
+        rb.Sleep();
+    }
+
+    public void unpauseArtifact()
+    {
+        //rb.useGravity = true;
+        active = true;
+        rb.WakeUp();
+        rb.velocity = velocityBeforeSleep;
     }
 
     // Update is called once per frame
@@ -36,8 +50,15 @@ public class Artifact : MonoBehaviour {
         //should cause you to drop the object. But when dropping it, it gets a large amount of
         //force applied to it, so this must be cooled down
 
-        if (rb.velocity.magnitude > velocityLimit) {
-            rb.velocity = new Vector3(0,-9,0);
+        if (!active) {
+            return;
+        }
+        if (rb.velocity.magnitude > velocityLimit)
+        {
+            rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * 3 * Time.deltaTime, 0);
+        }
+        else {
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + Physics.gravity.y*3 * Time.deltaTime, 0);
         }
         if (rb.angularVelocity.magnitude > velocityLimit)
         {
