@@ -35,6 +35,8 @@ public class Slot : MonoBehaviour {
 
     public bool CheckConfiguration(float nameIndex, Vector3 artifactVec) {
 		foreach (Vector4 v in configurations) {
+            Debug.Log("Useful Exact:" + artifactVec.x  +  "," + artifactVec.y + ","+ artifactVec.z + "VS:" +
+                v.x  +"," + v.y + "," + v.z);
 			if (v.w == nameIndex) {
 				float totalAngleDifference = 0.0f;
 				totalAngleDifference += getAngleDifference (v.x, artifactVec.x);
@@ -82,7 +84,7 @@ public class Slot : MonoBehaviour {
 	void insertArtifact(GameObject artifact){
 		//Have player 'drop' the artifact, de-parenting it and clearing appropriate data fields
 		artifact.transform.localEulerAngles = matchedConfig;
-        Debug.Log(matchedConfig);
+        //Debug.Log(matchedConfig);
 		artifact.transform.parent.GetComponent<PickUp> ().dropObject ();
         artifact.GetComponent<Artifact>().lastConfig = matchedConfig;
 		artifact.GetComponent<Rigidbody> ().isKinematic = true;

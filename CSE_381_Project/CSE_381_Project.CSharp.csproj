@@ -75,7 +75,7 @@
     <Compile Include="Assets\Scripts\GameObjects\PickUp.cs" />
     <Compile Include="Assets\Scripts\GameObjects\SimpleObelisk.cs" />
     <Compile Include="Assets\Scripts\GameObjects\Slot.cs" />
-    <Compile Include="Assets\Scripts\GameObjects\TutorialControls.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\TutorialPickUp.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\Scripts\Managers\SoundManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Victory.cs" />
