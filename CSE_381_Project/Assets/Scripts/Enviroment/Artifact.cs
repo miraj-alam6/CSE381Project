@@ -55,8 +55,6 @@ public class Artifact : MonoBehaviour {
         if (!active) {
             return;
         }
-
-        
         if (rb.velocity.magnitude > velocityLimit)
         {
             rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * 3 * Time.deltaTime, 0);
@@ -68,8 +66,7 @@ public class Artifact : MonoBehaviour {
         {
             rb.angularVelocity = new Vector3(0, 0, 0);
         }
-       /* */
-        //Wrap everything around with the active condition which becomes false when game is paused
+		//Wrap everything around with the active condition which becomes false when game is paused
         if (active && isHeld) {
             if (currentDistance == 0)
             {
@@ -102,11 +99,6 @@ public class Artifact : MonoBehaviour {
         if (active && isHeld)
         {
             if (!other.tag.Equals("Player") && !other.isTrigger) {
-
-               // Debug.Log(other.tag);
-                if (other.tag.Equals("MainCamera")) {
-                    Debug.Log("shit");
-                }
                 springIn();
                 springOutAttempt = false;
             }

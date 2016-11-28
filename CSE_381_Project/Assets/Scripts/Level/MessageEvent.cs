@@ -20,16 +20,20 @@ public class MessageEvent : MonoBehaviour
     void Update()
     {
         messageStartDelay -= Time.deltaTime;
-        if (messageStartDelay > 0 || timeMessageStays <= 0)
-        {
-            messageToTrigger.SetActive(false);
-            return;
-        }
+		if (messageStartDelay > 0 || timeMessageStays <= 0) {
+			if (messageToTrigger) {
+				messageToTrigger.SetActive (false);
+				return;
+        
+			}
+		}
         else {
-            if (!GameManager.instance.gamePaused) { 
-                messageToTrigger.SetActive(true);
-                timeMessageStays -= Time.deltaTime;
-            }
+			if (!GameManager.instance.gamePaused) { 
+				if (messageToTrigger) {
+					messageToTrigger.SetActive (true);
+					timeMessageStays -= Time.deltaTime;
+				}
+			}
         }
         
     }

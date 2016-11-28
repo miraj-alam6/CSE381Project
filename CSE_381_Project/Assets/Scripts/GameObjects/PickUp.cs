@@ -89,6 +89,7 @@ public class PickUp : MonoBehaviour
         }
 
 		if (Input.GetButtonDown("Fire1")) {
+			print (heldObject);
          //   print(Vector3.Dot(Camera.main.transform.forward,
          //           (obelisk.transform.position - Camera.main.transform.position).normalized));
             if (heldObject != null && slot != null) {
