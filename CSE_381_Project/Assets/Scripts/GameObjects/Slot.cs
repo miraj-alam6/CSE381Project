@@ -6,7 +6,11 @@ public class Slot : MonoBehaviour {
 	public float angleUncertainty = 15f;
 	public float speed = 10.0f;
 	private bool isInserting = false;
-	Transform insertTarget;
+    //These are needed to make up for weird stuff with the rotations
+    public float offsetX;
+    public float offsetY;
+    public float offsetZ;
+    Transform insertTarget;
 
 	GameObject artifactObject;
 	Vector3 matchedConfig;
@@ -43,13 +47,27 @@ public class Slot : MonoBehaviour {
 				totalAngleDifference += getAngleDifference (v.y, artifactVec.y);
 				totalAngleDifference += getAngleDifference (v.z, artifactVec.z);
 
-				//print (totalAngleDifference);
-				//If the total difference is less than or equal to the allowed uncertainty, the artifact can be inserted
-				if (angleUncertainty >= totalAngleDifference) {
-					matchedConfig = v;
-					return true;
-				}	
-			}
+                //print (totalAngleDifference);
+                //If the total difference is less than or equal to the allowed uncertainty, the artifact can be inserted
+                if (angleUncertainty >= totalAngleDifference)
+                {
+                    matchedConfig = v;
+                    return true;
+                }
+                else {
+                    totalAngleDifference = 0.0f;
+                    totalAngleDifference += getAngleDifference(v.x + offsetX, artifactVec.x);
+                    totalAngleDifference += getAngleDifference(v.y + offsetY, artifactVec.y);
+                    totalAngleDifference += getAngleDifference(v.z + offsetZ, artifactVec.z);
+                    matchedConfig = v;
+                    if (angleUncertainty >= totalAngleDifference)
+                    {
+                        matchedConfig = v;
+                        return true;
+                    }
+
+                }
+            }
 		}
 		//If it matches none of the preset configurations, it cannot be inserted
 		return false;
@@ -74,7 +92,7 @@ public class Slot : MonoBehaviour {
             SoundManager.instance.rejectPiece();
             return;
 		}
-
+        
         SoundManager.instance.acceptPiece();
 		//Valid artifact name/angles 
 		insertArtifact(heldObject);

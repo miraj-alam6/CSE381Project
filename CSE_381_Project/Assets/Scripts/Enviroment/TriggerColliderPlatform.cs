@@ -36,7 +36,7 @@ public class TriggerColliderPlatform : MonoBehaviour
         }
         if (other.tag.Equals("Artifact"))
         {
-            if (other.gameObject.transform.parent.tag != null &&
+            if (other.gameObject.transform.parent != null &&
                 !other.gameObject.transform.parent.tag.Equals("MainCamera") &&
                 !other.gameObject.transform.parent.tag.Equals("Slot"))
             {

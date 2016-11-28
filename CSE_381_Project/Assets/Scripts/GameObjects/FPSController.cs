@@ -144,7 +144,7 @@ public class FPSController : MonoBehaviour
         //IMPORTANT: this gives an error speedVector = speedVector * transform.rotation;
         //instead change the order of the factors. I'm guessing this is because of how
         //matrix operations work.
-        speedVector = transform.rotation * speedVector;
+        speedVector = transform.rotation *speedVector;
 
         
         //cc.SimpleMove(speedVector); //Simple move is fine for when you have no jumping

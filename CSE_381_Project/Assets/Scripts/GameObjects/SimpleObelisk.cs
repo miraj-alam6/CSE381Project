@@ -26,7 +26,7 @@ public class SimpleObelisk : Obelisk
 
     public void activateObelisk()
     {
-
+        SoundManager.instance.activateObelisk();
         for (int i = 0; i < affectedStructures.Length; i++)
         {
             affectedStructures[i].setupActivePoints(1);

@@ -4,7 +4,7 @@ using System.Collections;
 public class Artifact : MonoBehaviour {
     public string artifactName = "Default";
     Rigidbody rb;
-    public bool springOutAttempt; //Once trigger exits, the artifact needs to start trying to go back out,
+    public bool springOutAttempt; //Once trigger exits, the artifact needs to start trying to go back out
     public bool active = true;
     public float springDistance;
     public float currentDistance;
@@ -20,6 +20,8 @@ public class Artifact : MonoBehaviour {
     //make sure you can't drop the piece when the space is 0
     Collider col;
     public Vector3 velocityBeforeSleep;
+    public bool hasSpecialMessage;
+    public string specialMessage;
     //this boolean tells it to do it
 
     // Use this for initialization
@@ -49,10 +51,12 @@ public class Artifact : MonoBehaviour {
         //The edge case of going straight up into structure causes weird physics that
         //should cause you to drop the object. But when dropping it, it gets a large amount of
         //force applied to it, so this must be cooled down
-
+        
         if (!active) {
             return;
         }
+
+        
         if (rb.velocity.magnitude > velocityLimit)
         {
             rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * 3 * Time.deltaTime, 0);
@@ -64,6 +68,7 @@ public class Artifact : MonoBehaviour {
         {
             rb.angularVelocity = new Vector3(0, 0, 0);
         }
+       /* */
         //Wrap everything around with the active condition which becomes false when game is paused
         if (active && isHeld) {
             if (currentDistance == 0)
@@ -98,7 +103,7 @@ public class Artifact : MonoBehaviour {
         {
             if (!other.tag.Equals("Player") && !other.isTrigger) {
 
-                Debug.Log(other.tag);
+               // Debug.Log(other.tag);
                 if (other.tag.Equals("MainCamera")) {
                     Debug.Log("shit");
                 }
@@ -168,6 +173,15 @@ public class Artifact : MonoBehaviour {
 
     public void setIsHeld(bool status) {
         isHeld = status;
+        if (isHeld) {
+            if (hasSpecialMessage)
+            {
+                GameManager.instance.currentLevel.updateLevel(specialMessage);
+            }
+            else { 
+                GameManager.instance.currentLevel.updateLevel("pick_up_artifact");
+            }
+        }
     }
 
     public void extremeCaseDrop() {
