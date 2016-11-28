@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -11,6 +12,11 @@ public class GameManager : MonoBehaviour {
     public PickUp playerPickup;
     public bool allowedToPause = true;
     public bool gamePaused = false;
+    public GameObject canvas;
+    public Level currentLevel;
+    private float elapsedTime; //Time that has been elasped in the level in seconds I think.
+    //if a single game manager is used throughout the game, then make sure
+    //to reset the elapsed time at start of the level
     // Use this for initialization
     void Awake () {
         if (instance == null)
@@ -53,7 +59,8 @@ public class GameManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if (allowedToPause) { 
+        if (allowedToPause) {
+            elapsedTime += Time.deltaTime;
             if (Input.GetButtonDown("Pause")) {
                 if (gamePaused){
                     unpauseGame();
@@ -79,7 +86,8 @@ public class GameManager : MonoBehaviour {
         {
             artifacts[i].pauseArtifact();
         }
-
+        Cursor.lockState = CursorLockMode.None;
+        canvas.GetComponent<PauseMenuButtonEventHandler>().LoadPauseScreen();
         gamePaused = true;
     }
     public void unpauseGame()
@@ -96,6 +104,46 @@ public class GameManager : MonoBehaviour {
         {
             artifacts[i].unpauseArtifact();
         }
+        Cursor.lockState = CursorLockMode.Locked;
+        canvas.GetComponent<PauseMenuButtonEventHandler>().ClosePauseScreen();
         gamePaused = false;
     }
+
+    //Need this to close pause screen through a button, and prevent infinite recursion
+    public void unpauseLogic()
+    {
+        playerController.active = true;
+        playerPickup.active = true;
+        for (int i = 0; i < movingStructures.Count; i++)
+        {
+            movingStructures[i].activated = true;
+        }
+
+        //unpause all artifacts
+        for (int i = 0; i < artifacts.Count; i++)
+        {
+            artifacts[i].unpauseArtifact();
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        gamePaused = false;
+    }
+
+
+    public void restartLevel() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    /*
+    public void setCurrentLevel() {
+        string levelName = SceneManager.GetActiveScene().name;
+        if (levelName.Equals("_scenes/Level0") || levelName.Equals("Level0"))
+        {
+            currentLevel = new Level0();
+        }
+
+    }
+    
+    public Level getCurrentLevel() {
+        return currentLevel;
+    }
+    */
 }

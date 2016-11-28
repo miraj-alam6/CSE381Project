@@ -3,16 +3,17 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour {
     public AudioSource musicChannel;
-    public AudioSource efxChannel1;
-    public AudioSource efxChannel2;
-    public AudioSource efxChannel3;
-    public AudioSource efxChannel4;
-    public AudioSource efxChannel5;
-    public AudioSource efxChannel6;
+    public AudioSource efxChannel1; //footsteps
+    public AudioSource efxChannel2; //Piece Sounds
+    public AudioSource efxChannel3; //Wrong Move/Right move
+    public AudioSource efxChannel4; //Obelisk magic
+    public AudioSource efxChannel5; //Shots hitting Player
+    public AudioSource efxChannel6; //Menu Stuff, Miscellaneous
 
     public AudioClip rotatePieceSound;
     public AudioClip rotationRejectSound;
     public AudioClip rotationAcceptSound;
+    public AudioClip obeliskActivateSound;
     public AudioClip removePieceSound;
     public AudioClip footStepSound;
     public float footStepSoundCoolDownTime = 0.1f;
@@ -159,6 +160,11 @@ public class SoundManager : MonoBehaviour {
     public void removePiece()
     {
         PlaySound(2, 100, removePieceSound);
+    }
+
+    public void activateObelisk() {
+        PlaySound(4, 100, obeliskActivateSound);
+
     }
 
     public void footStep() {

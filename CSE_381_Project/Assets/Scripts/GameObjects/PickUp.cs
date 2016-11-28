@@ -132,6 +132,7 @@ public class PickUp : MonoBehaviour
         {
             return;
         }
+        
         else
 		{
             primaryRotating = false;
