@@ -55,11 +55,6 @@ public class Artifact : MonoBehaviour {
         if (!active) {
             return;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1a587c7948cf8ae31377f2936ed19d8d493ca135
-        
         if (rb.velocity.magnitude > velocityLimit)
         {
             rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * 3 * Time.deltaTime, 0);
@@ -71,12 +66,7 @@ public class Artifact : MonoBehaviour {
         {
             rb.angularVelocity = new Vector3(0, 0, 0);
         }
-<<<<<<< HEAD
-        
-=======
-       /* */
->>>>>>> 1a587c7948cf8ae31377f2936ed19d8d493ca135
-        //Wrap everything around with the active condition which becomes false when game is paused
+		//Wrap everything around with the active condition which becomes false when game is paused
         if (active && isHeld) {
             if (currentDistance == 0)
             {
@@ -109,15 +99,6 @@ public class Artifact : MonoBehaviour {
         if (active && isHeld)
         {
             if (!other.tag.Equals("Player") && !other.isTrigger) {
-
-<<<<<<< HEAD
-                //Debug.Log(other.tag);
-=======
-               // Debug.Log(other.tag);
->>>>>>> 1a587c7948cf8ae31377f2936ed19d8d493ca135
-                if (other.tag.Equals("MainCamera")) {
-                    Debug.Log("shit");
-                }
                 springIn();
                 springOutAttempt = false;
             }
