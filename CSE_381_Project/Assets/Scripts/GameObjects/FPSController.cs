@@ -8,6 +8,20 @@ using System.Collections;
 
 public class FPSController : MonoBehaviour
 {
+    //---Variables for cannon ball collision, names are left generic in case of future pushing mechanics...---
+    //tracks if player was hit by cannon ball recently
+    bool pushed = false;
+    //times how long player has been pushed by cannon ball force
+    float pushTimer = 0.0f;
+    //total time player is pushed by cannon ball force
+    public float maxPushTime;
+    //percentage of player controls that still apply while pushed [0 - 1.0]
+    public float pushControl;
+    //direction player is pushed by cannon ball
+    Vector3 pushForceVector;
+    //amount to decrement pushForce by for realistic pseudo physics
+    Vector3 pushDecrementFactor;
+
     public float speed = 5.0f;
     public float mouseSensitivity = 5.0f;
     public float jumpSpeed;
@@ -146,12 +160,37 @@ public class FPSController : MonoBehaviour
         //matrix operations work.
         speedVector = transform.rotation * speedVector;
 
-        
+        //Code for cannon ball collision
+        if (pushed)
+        {
+            //Increment timer
+            pushTimer += Time.deltaTime;
+            //Apply force to player, decremented based on current push duration
+            speedVector *= pushControl;
+            speedVector += pushForceVector - pushDecrementFactor * pushTimer;
+            //If player has been pushed for the duration of maxPushTime, reset timer and set pushed to false
+            if(pushTimer >= maxPushTime)
+            {
+                pushed = false;
+                pushTimer = 0.0f;
+            }
+        }
+        //End-code for cannon ball collision
+
+
         //cc.SimpleMove(speedVector); //Simple move is fine for when you have no jumping
         //Using Move will mean no more auto gravity, you need to write some code, the exact code is above
         //in this file 
         cc.Move(speedVector * Time.deltaTime); // Need to multiply by Time.deltaTime to make sure
         //the speed is not different on different framerates.
         // float forwardSpeed = Input.GetAxis("Vertical");
+    }
+
+    //Sets the direction vector of which the player will be 'pushed' from collision
+    public void push(Vector3 vec)
+    {
+        pushForceVector = vec;
+        pushDecrementFactor = pushForceVector * (1/maxPushTime);
+        pushed = true;
     }
 }

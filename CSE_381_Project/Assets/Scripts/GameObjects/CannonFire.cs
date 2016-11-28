@@ -8,41 +8,27 @@ public class CannonFire : MonoBehaviour {
 	public GameObject cannonBall;
 	bool paused;
 
-
-	bool playerHit;
-	bool artifactHit;
-
 	void Start() {
 		paused = false;
-		playerHit = false;
-		artifactHit = false;
 	}
 
-	// Update is called once per frame
-	void Update () {
-		if (!paused) {
-			timeCount += Time.deltaTime;
+    // Update is called once per frame
+    void Update()
+    {
+        if (!paused)
+        {
+            timeCount += Time.deltaTime;
 
-			//If the time between fires is equal to or greater than the delay, then fire
-			if (timeCount >= fireDelay) {
-				Instantiate (cannonBall, transform.position, transform.localRotation);
-				timeCount = 0.0f;
-			}
-
-			if (playerHit)
-				//playerHitEvent ();
-
-			if (artifactHit)
-				artifactHitEvent ();
-		}
-	}
-
-	public void playerHitEvent(Vector3 hitDirection, float timeOfHit){
-		
-	}
-
-	public void artifactHitEvent (){
-	
-	}
+            //If the time between fires is equal to or greater than the delay, then fire
+            if (timeCount >= fireDelay)
+            {
+                //parentCannon.GetComponent<Animator> ().Play("Cube|Fire");
+                Object cBallInstanceObject = Instantiate(cannonBall, transform.position, transform.localRotation);
+                GameObject cBallInstance = (GameObject)cBallInstanceObject;
+                cBallInstance.GetComponent<CannonBall>().setFireDirection(transform.forward);
+                timeCount = 0.0f;
+            }
+        }
+    }
 
 }

@@ -9,7 +9,7 @@ public class PickUp : MonoBehaviour
     Vector3 cameraCenter = new Vector3(0.5f, 0.5f, 0f); //screen center
 
     //Object currently being held
-    GameObject heldObject = null;
+    public GameObject heldObject = null;
     Artifact heldArtifact = null; //this is just the artifact script for the held object
 	GameObject obelisk = null;
 	GameObject slot = null;
@@ -89,6 +89,7 @@ public class PickUp : MonoBehaviour
         }
 
 		if (Input.GetButtonDown("Fire1")) {
+			print (heldObject);
          //   print(Vector3.Dot(Camera.main.transform.forward,
          //           (obelisk.transform.position - Camera.main.transform.position).normalized));
             if (heldObject != null && slot != null) {
