@@ -1,14 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enviroment\Artifact.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameObjects\PickUp.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameObjects\PickUp.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameObjects\PickUp.cs" Line="82" Column="1" />
       <File FileName="Assets\Scripts\GameObjects\Slot.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Enviroment\Artifact.cs" Line="19" Column="63" />
-      <File FileName="Assets\Scripts\GameObjects\CannonFire.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enviroment\Artifact.cs" Line="68" Column="10" />
+      <File FileName="Assets\Scripts\GameObjects\CannonFire.cs" Line="26" Column="17" />
       <File FileName="Assets\Scripts\GameObjects\CannonBall.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameObjects\FPSController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameObjects\FPSController.cs" Line="131" Column="1" />
       <File FileName="Assets\Scripts\GameObjects\FPSShoot.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Level\MessageEvent.cs" Line="36" Column="5" />
+      <File FileName="Assets\Scripts\Level\Level0.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Level\Level3.cs" Line="13" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -4,9 +4,9 @@ using System.Collections;
 public class PickUp : MonoBehaviour
 {
     //Used for raycasting to pick up objects
-    Ray ray;
-    RaycastHit hit;
-    Vector3 cameraCenter = new Vector3(0.5f, 0.5f, 0f); //screen center
+	Vector3[] rayCasts = {new Vector3 (0.5f, 0.5f, 0f), new Vector3 (0.4f, 0.4f, 0f), new Vector3 (0.6f, 0.4f, 0f),
+		new Vector3 (0.4f, 0.6f, 0f), new Vector3 (0.6f, 0.6f, 0f), new Vector3 (0.4f, 0.5f, 0f), 
+		new Vector3 (0.6f, 0.5f, 0f)};
 
     //Object currently being held
     public GameObject heldObject = null;
@@ -64,22 +64,32 @@ public class PickUp : MonoBehaviour
         //Pick up/drop object
         if (Input.GetButtonDown("Fire2"))
         {
-            
-            //Draw ray for testing purposes
-            Debug.DrawRay(ray.origin, ray.direction * rayLength, Color.red);
-
-            ray = Camera.main.ViewportPointToRay(cameraCenter);
             //If not holding an object, attempt to pick up an object being looked at
             if (heldObject == null)
             {
-                //If the raycast hits, try to pick up the object (dependent on if it has a valid tag)
-                if (Physics.Raycast(ray, out hit, rayLength))
-                {
-                    // float rayDistance = Vector3.Distance(Camera.main.transform.position, hit.transform.position);
-                    // if (rayDistance > 3) { 
-                    pickUpObject(hit);
-                   // }
-                }
+				
+				RaycastHit hit = new RaycastHit();
+				for(int i = 0; i < rayCasts.Length; i++){
+					RaycastHit tempHit;
+					Ray tempRay = Camera.main.ViewportPointToRay (rayCasts [i]);
+					Physics.Raycast (tempRay, out tempHit, rayLength);
+					if (tempHit.transform != null) {
+						if (tempHit.transform.gameObject.tag.Equals ("Artifact")) {
+							if (hit.transform == null) {
+								hit = tempHit;
+							} else {
+								float hitDistance = Vector3.Distance (Camera.main.transform.position, hit.transform.position);
+								float tempHitDistance = Vector3.Distance (Camera.main.transform.position, tempHit.transform.position);
+								print ("Current best: " + hitDistance);
+								print ("New hit: " + tempHitDistance);
+								if (hitDistance > tempHitDistance)
+									hit = tempHit;
+							}
+						}
+					}
+				}
+				if (hit.transform != null)
+					pickUpObject (hit);
             }
             //If holding an object, drop it 
             else
@@ -89,7 +99,6 @@ public class PickUp : MonoBehaviour
         }
 
 		if (Input.GetButtonDown("Fire1")) {
-			print (heldObject);
          //   print(Vector3.Dot(Camera.main.transform.forward,
          //           (obelisk.transform.position - Camera.main.transform.position).normalized));
             if (heldObject != null && slot != null) {
