@@ -9,8 +9,10 @@ public class CannonBall : MonoBehaviour {
 	public float maxDistance;
     public float artifactImpactMagnitude;
     public float playerImpactMagnitude;
-    public bool paused;
+    public bool active = true;
 
+    private Vector3 velocityBeforeSleep;
+    private Rigidbody rb;
     Vector3 fireDirection;
     Vector3 startPosition;
 
@@ -18,17 +20,42 @@ public class CannonBall : MonoBehaviour {
 	void Start () {
         startPosition = transform.position;
         this.GetComponent<Rigidbody>().velocity = fireDirection * travelSpeed;
-		paused = false;
-		puScript =  Camera.main.GetComponent<PickUp> ();
+        rb = GetComponent<Rigidbody>();
+        puScript =  Camera.main.GetComponent<PickUp> ();
         player = Camera.main.transform.parent.GetComponent<FPSController>();
+        GameManager.instance.addCannonBall(this);
 	}
 
-	// Update is called once per frame
-	void Update () {
-		if (!paused) {
+    public void pause()
+    {
+        //rb.useGravity = false;
+        if (rb)
+        {
+            velocityBeforeSleep = rb.velocity;
+            rb.Sleep();
+        }
+        active = false;
+    }
+
+    public void unpause()
+    {
+        //rb.useGravity = true;
+        active = true;
+        if (rb) {
+            Debug.Log("Yooo");
+        rb.WakeUp();
+        rb.velocity = fireDirection * travelSpeed;
+        }
+    }
+    // Update is called once per frame
+    void Update () {
+        //Note: if this way is too slow, do it by adding cannonball to a list, and 
+        //incrementing the list in game manager. But you need to remove it as well
+        //because cannon balls can disappear
+		if (GameManager.instance.gamePaused) {
 			//CannonBall is at max distance, destroy itself
 			if (Vector3.Distance(startPosition, transform.position) >= maxDistance) {
-				Destroy (this.gameObject);
+                destroySelf();
 			}
 		}
 	}
@@ -45,8 +72,8 @@ public class CannonBall : MonoBehaviour {
                 if(puScript.heldObject != null)
                     puScript.dropObject();
                 player.push(forceDirection);
-
-                Destroy(this.gameObject);
+                destroySelf();
+                
             }
         }
 
@@ -69,14 +96,21 @@ public class CannonBall : MonoBehaviour {
                 forceDirection.Normalize();
                 //Multiply forceDirection by impactMagnitude 
                 rb.AddForce(forceDirection * artifactImpactMagnitude, ForceMode.Impulse);
-                Destroy(this.gameObject);
+                destroySelf();
+                
             }
         }
 	}
 
+    public void destroySelf() {
+        GameManager.instance.removeCannonBall(this);
+        Destroy(this.gameObject);
+    }
     public void setFireDirection(Vector3 vec)
     {
         fireDirection = vec;
     }
+
+    
 }
 

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MessageRing : MonoBehaviour {
     public GameObject messageToShow;
+   
 	// Use this for initialization
 	void Start () {
 	

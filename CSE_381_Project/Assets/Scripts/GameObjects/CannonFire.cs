@@ -6,16 +6,16 @@ public class CannonFire : MonoBehaviour {
 	float timeCount = 0.0f;
 	public float fireDelay;
 	public GameObject cannonBall;
-	bool paused;
+	public bool active = true;
 
 	void Start() {
-		paused = false;
+        GameManager.instance.addCannonFire(this);
 	}
 
     // Update is called once per frame
     void Update()
     {
-        if (!paused)
+        if (active)
         {
             timeCount += Time.deltaTime;
 
