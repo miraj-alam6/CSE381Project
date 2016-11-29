@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour {
 
     public List<MovingStructure> movingStructures;
     public List<Artifact> artifacts;
+    public List<ScaleAnimation> scaleAnimations;
+    public List<CannonBall> cannonBalls;
+    public List<CannonFire> cannons;
     public FPSController playerController;
     public PickUp playerPickup;
     public bool allowedToPause = true;
@@ -33,11 +36,33 @@ public class GameManager : MonoBehaviour {
 
     }
 
+
     //Call this in between levels if we chooose to not destroy on load
     public void resetAllFields() {
         playerController = null;
         playerPickup = null;
         movingStructures = new List<MovingStructure>();
+        artifacts = new List<Artifact>();
+        scaleAnimations = new List<ScaleAnimation>();
+        cannonBalls = new List<CannonBall>();
+        cannons = new List<CannonFire>();
+    }
+
+    public void addCannonFire(CannonFire cannon) {
+        cannons.Add(cannon);
+    }
+
+    public void addCannonBall(CannonBall ball)
+    {
+        cannonBalls.Add(ball);
+    }
+    public void removeCannonBall(CannonBall ball)
+    {
+        cannonBalls.Remove(ball);
+    }
+    public void addScaleAnimation(ScaleAnimation anim)
+    {
+        scaleAnimations.Add(anim);
     }
 
     public void setPlayerController(FPSController player) {
@@ -86,9 +111,26 @@ public class GameManager : MonoBehaviour {
         {
             artifacts[i].pauseArtifact();
         }
+
+        //pause all scale animations
+        for (int i = 0; i < scaleAnimations.Count; i++)
+        {
+            scaleAnimations[i].active = false;
+        }
+
         Cursor.lockState = CursorLockMode.None;
         canvas.GetComponent<PauseMenuButtonEventHandler>().LoadPauseScreen();
         gamePaused = true;
+        //pause all cannonballs
+        for (int i = 0; i < cannonBalls.Count; i++) {
+            cannonBalls[i].pause();
+        }
+        //pause all cannons
+        for (int i = 0; i < cannons.Count; i++)
+        {
+            cannons[i].active = false;
+        }
+        
     }
     public void unpauseGame()
     {
@@ -103,6 +145,22 @@ public class GameManager : MonoBehaviour {
         for (int i = 0; i < artifacts.Count; i++)
         {
             artifacts[i].unpauseArtifact();
+        }
+
+        //unpause all scale animations
+        for (int i = 0; i < scaleAnimations.Count; i++)
+        {
+            scaleAnimations[i].active = true;
+        }
+        //unpause all cannonballs
+        for (int i = 0; i < cannonBalls.Count; i++)
+        {
+            cannonBalls[i].unpause();
+        }
+        //unpause all cannons
+        for (int i = 0; i < cannons.Count; i++)
+        {
+            cannons[i].active = true;
         }
         Cursor.lockState = CursorLockMode.Locked;
         canvas.GetComponent<PauseMenuButtonEventHandler>().ClosePauseScreen();

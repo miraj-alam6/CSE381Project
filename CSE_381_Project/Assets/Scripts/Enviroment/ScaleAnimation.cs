@@ -7,13 +7,17 @@ public class ScaleAnimation : MonoBehaviour {
     public float bigScale;
     public bool bigDirection;
     public float step;
-	// Use this for initialization
-	void Start () {
-	
+    public bool active = true;
+    // Use this for initialization
+    void Start () {
+        GameManager.instance.addScaleAnimation(this);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (!active) {
+            return;
+        }
         //this is for scaling up
         if (bigDirection) {
             transform.localScale = 

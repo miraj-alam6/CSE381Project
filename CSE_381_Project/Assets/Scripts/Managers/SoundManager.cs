@@ -163,7 +163,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void activateObelisk() {
-        PlaySound(4, 100, obeliskActivateSound);
+        PlaySound(4, 20, obeliskActivateSound);
 
     }
 
