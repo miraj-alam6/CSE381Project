@@ -60,7 +60,7 @@ public class Artifact : MonoBehaviour {
             rb.velocity = new Vector3(0, rb.velocity.y + Physics.gravity.y * 3 * Time.deltaTime, 0);
         }
         else {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + Physics.gravity.y*3 * Time.deltaTime, 0);
+			rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y + Physics.gravity.y*3 * Time.deltaTime, rb.velocity.z);
         }
         if (rb.angularVelocity.magnitude > velocityLimit)
         {

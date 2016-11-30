@@ -80,8 +80,8 @@ public class PickUp : MonoBehaviour
 							} else {
 								float hitDistance = Vector3.Distance (Camera.main.transform.position, hit.transform.position);
 								float tempHitDistance = Vector3.Distance (Camera.main.transform.position, tempHit.transform.position);
-								print ("Current best: " + hitDistance);
-								print ("New hit: " + tempHitDistance);
+								//print ("Current best: " + hitDistance);
+								//print ("New hit: " + tempHitDistance);
 								if (hitDistance > tempHitDistance)
 									hit = tempHit;
 							}

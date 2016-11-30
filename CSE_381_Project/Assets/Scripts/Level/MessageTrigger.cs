@@ -5,6 +5,7 @@ public class MessageTrigger : MonoBehaviour {
     public GameObject messageToTrigger;
     public float timeMessageStays  = 5.0f;
     private bool countDown;
+	public bool timedTrigger = true;
 
 	// Use this for initialization
 	void Start () {
@@ -13,12 +14,14 @@ public class MessageTrigger : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (countDown && !GameManager.instance.gamePaused) {
-            timeMessageStays -= Time.deltaTime;
-            if (timeMessageStays <= 0) {
-                messageToTrigger.SetActive(false);
-            }
-        }
+		if (timedTrigger) {
+			if (countDown && !GameManager.instance.gamePaused) {
+				timeMessageStays -= Time.deltaTime;
+				if (timeMessageStays <= 0) {
+					messageToTrigger.SetActive (false);
+				}
+			}
+		}
 	}
 
     void OnTriggerEnter(Collider other) {
@@ -27,4 +30,12 @@ public class MessageTrigger : MonoBehaviour {
             countDown = true;
         }
     }
+
+	void OnTriggerExit(Collider other){
+		if (other.tag.Equals ("Player")) {
+			if (!timedTrigger) {
+				messageToTrigger.SetActive (false);
+			}
+		}
+	}
 }

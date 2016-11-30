@@ -42,21 +42,30 @@ public class CannonBall : MonoBehaviour {
         //rb.useGravity = true;
         active = true;
         if (rb) {
-            Debug.Log("Yooo");
         rb.WakeUp();
         rb.velocity = fireDirection * travelSpeed;
         }
     }
     // Update is called once per frame
-    void Update () {
+    void FixedUpdate() {
         //Note: if this way is too slow, do it by adding cannonball to a list, and 
         //incrementing the list in game manager. But you need to remove it as well
         //because cannon balls can disappear
-		if (GameManager.instance.gamePaused) {
-			//CannonBall is at max distance, destroy itself
-			if (Vector3.Distance(startPosition, transform.position) >= maxDistance) {
-                destroySelf();
-			}
+
+        //At high speeds, onTriggerEnter will not handle the cannon collision
+        //Inefficient, will swap for raycasting later on
+        Collider[] manualCollsionCheck = Physics.OverlapSphere(transform.position, this.GetComponent<SphereCollider>().radius);
+        if (manualCollsionCheck.Length > 0)
+        {
+            string triggerTag = manualCollsionCheck[0].transform.gameObject.tag;
+            if (triggerTag.Equals("Player") || triggerTag.Equals("Artifact")) {  
+                OnTriggerEnter(manualCollsionCheck[0]);
+            }
+        }
+
+        
+		if (Vector3.Distance(startPosition, transform.position) >= maxDistance) {
+            destroySelf();
 		}
 	}
 
@@ -88,7 +97,9 @@ public class CannonBall : MonoBehaviour {
                 //Drop the artifact if it is held
                 bool isHeld = other.gameObject.GetComponent<Artifact>().isHeld;
                 if (isHeld)
+                {
                     puScript.dropObject();
+                }
                 Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
 
                 //forceDirection is the direction of the collision, set y to 0 to avoid edge case direct-up forces and normalize
