@@ -21,6 +21,7 @@ public class Slot : MonoBehaviour {
     //of the artifact in the list of possible artifacts.
     public Vector4[] configurations;
     public int actionNumber;
+    public bool occupied = false;
 	// Use this for initialization
 	void Start () {
 		//If more children are added to slot, THIS MUST BE CHANGED
@@ -74,7 +75,10 @@ public class Slot : MonoBehaviour {
     }
 
 	public void handleArtifact (GameObject heldObject){
-		
+
+        if (occupied) {
+            return;
+        }
 		Vector3 artifactAngles = heldObject.transform.localRotation.eulerAngles;
 		string name = heldObject.GetComponent<Artifact> ().artifactName;
 
@@ -109,6 +113,7 @@ public class Slot : MonoBehaviour {
 		artifact.transform.parent = this.transform;
 		artifactObject = artifact;
 		isInserting = true;
+        occupied = true;
 		
 	}
 
@@ -144,6 +149,7 @@ public class Slot : MonoBehaviour {
 	}
 
     public void artifactRemoved() {
+        occupied = false;
         parentObelisk.processStateChange(1);
     }
 
