@@ -1,7 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:CSE_381_Project/Assets/_scenes/Level3/Level3 Materials/FirstArtifact.meta
 guid: e67f8da321bd54a43bf92f2937427514
 folderAsset: yes
 timeCreated: 1480478327
+=======
+guid: e6bf22c71167a0b4b90e0cbf65ebf0d1
+timeCreated: 1480378364
+>>>>>>> e41e1d2c02a5ba3e25aadcc0fc627e370044c443:CSE_381_Project/Assets/_scenes/Level2.unity.meta
 licenseType: Free
 DefaultImporter:
   userData: 

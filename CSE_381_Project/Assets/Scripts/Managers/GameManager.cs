@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour {
     public bool gamePaused = false;
     public GameObject canvas;
     public Level currentLevel;
+    public float endLevelTime = 3.0f;
+    public bool levelDone = false;
     private float elapsedTime; //Time that has been elasped in the level in seconds I think.
     //if a single game manager is used throughout the game, then make sure
     //to reset the elapsed time at start of the level
@@ -33,7 +36,7 @@ public class GameManager : MonoBehaviour {
 	}
 
     void Start() {
-
+        
     }
 
 
@@ -46,6 +49,24 @@ public class GameManager : MonoBehaviour {
         scaleAnimations = new List<ScaleAnimation>();
         cannonBalls = new List<CannonBall>();
         cannons = new List<CannonFire>();
+    }
+
+    public void finishLevel()
+    {
+        allowedToPause = false;
+        playerController.stopMovement = true;
+        levelDone = true; 
+    }
+    public void goToNextLevel() {
+        if (currentLevel is Level1)
+        {
+            Debug.Log("arite,what");
+            SceneManager.LoadScene("_scenes/Level2");
+        }
+        else if (currentLevel is Level2)
+        {
+            SceneManager.LoadScene("_scenes/Level3");
+        }
     }
 
     public void addCannonFire(CannonFire cannon) {
@@ -84,14 +105,27 @@ public class GameManager : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if (allowedToPause) {
+        if (allowedToPause)
+        {
             elapsedTime += Time.deltaTime;
-            if (Input.GetButtonDown("Pause")) {
-                if (gamePaused){
+            if (Input.GetButtonDown("Pause"))
+            {
+                if (gamePaused)
+                {
                     unpauseGame();
                 }
-                else{
+                else {
                     pauseGame();
+                }
+            }
+        }
+        else {
+
+            if (levelDone)
+            {
+                if(Input.GetButton("Submit"))
+                {
+                    goToNextLevel();
                 }
             }
         }

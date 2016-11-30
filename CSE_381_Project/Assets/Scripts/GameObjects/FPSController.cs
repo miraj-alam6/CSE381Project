@@ -33,6 +33,7 @@ public class FPSController : MonoBehaviour
     public float rotatePitchRange = 60.0f; // represents 60 degrees
                                            // Use this for initialization
     public bool active = true;
+    public bool stopMovement = false;
     CharacterController cc;
     void Start()
     {
@@ -41,6 +42,7 @@ public class FPSController : MonoBehaviour
         cc  = GetComponent<CharacterController>();
     }
 
+    
     void OnCollisionStay(Collision collisionInfo)
     {
         Debug.Log("Staying");
@@ -74,6 +76,10 @@ public class FPSController : MonoBehaviour
         //How to Rotate
         //Left right rotation
         float rotYaw = Input.GetAxis("Mouse X") * mouseSensitivity; //
+        if (stopMovement)
+        {
+            rotYaw = 0;
+        }
         transform.Rotate(0, rotYaw, 0); // we directly change Yaw of our character for us to move
         //to places. Rotate about the y axis.
 
@@ -89,7 +95,10 @@ public class FPSController : MonoBehaviour
         rotPitch -= Input.GetAxis("Mouse Y") * mouseSensitivity; //do -= instead of += 
                                                                  //here to fix inverted axis
         rotPitch = Mathf.Clamp(rotPitch, -rotatePitchRange, rotatePitchRange);
-
+        if (stopMovement)
+        {
+            rotPitch = 0;
+        }
         // Camera.main.transform.Rotate(-rotPitch, 0, 0); //rotate about the x axis to look up and down
         Camera.main.transform.localRotation = Quaternion.Euler(rotPitch, 0, 0);
         //Note, you need to use localRotation above or else things are weird
@@ -98,7 +107,9 @@ public class FPSController : MonoBehaviour
         float forwardSpeed = speed * Input.GetAxis("Vertical"); //to move forward AND backward(if negative)
         float strafeSpeed = speed * Input.GetAxis("Horizontal"); //to move right and left(if negative)
 
-
+        if (stopMovement) {
+            forwardSpeed = strafeSpeed = 0;
+        }
         // Vector3 speedVector = new Vector3(strafeSpeed, Physics.gravity.y, forwardSpeed); //forward movement is across z axis 
         //above is wrong because gravity is not constant.
 
@@ -111,7 +122,7 @@ public class FPSController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             //Check if you are touching the ground.
-            if (cc.isGrounded && canJump)
+            if (cc.isGrounded && canJump && !stopMovement)
             {
                 verticalVelocity = jumpSpeed;
                 canJump = false;
