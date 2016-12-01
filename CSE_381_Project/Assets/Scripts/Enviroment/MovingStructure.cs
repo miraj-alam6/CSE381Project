@@ -199,6 +199,16 @@ public class MovingStructure : MonoBehaviour {
         
     }
 
+
+    public void toggleDestination() {
+        if (pathGotoLatter[pathIndex])
+        {
+            pathGotoLatter[pathIndex] = false;
+        }
+        else {
+            pathGotoLatter[pathIndex] = true;
+        }
+    }
     //This sets which path to use.
     //It is important to also call setupActivePoints() 
     //after calling setIndex if you actually want the platform start using the
