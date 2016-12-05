@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+//using UnityEditor;
 
 public class Slot : MonoBehaviour {
 	public float angleUncertainty = 15f;
@@ -22,8 +22,11 @@ public class Slot : MonoBehaviour {
     public Vector4[] configurations;
     public int actionNumber;
     public bool occupied = false;
-	// Use this for initialization
-	void Start () {
+    public float arrowMoveX;
+    public float arrowMoveY;
+    public float arrowMoveZ;
+    // Use this for initialization
+    void Start () {
 		//If more children are added to slot, THIS MUST BE CHANGED
 		insertTarget = this.transform.GetChild (0);
 	}
@@ -53,7 +56,19 @@ public class Slot : MonoBehaviour {
                 if (angleUncertainty >= totalAngleDifference)
                 {
                     matchedConfig = v;
+                    if (parentObelisk is ArrowObelisk) {
+                        if (
+                        ((ArrowObelisk)parentObelisk).attemptEffect(new Vector3(arrowMoveX, arrowMoveY
+                            , arrowMoveZ)))
+                        {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
                     return true;
+
                 }
                 else {
                     totalAngleDifference = 0.0f;
@@ -64,6 +79,18 @@ public class Slot : MonoBehaviour {
                     if (angleUncertainty >= totalAngleDifference)
                     {
                         matchedConfig = v;
+                        if (parentObelisk is ArrowObelisk)
+                        {
+                            if (
+                           ((ArrowObelisk)parentObelisk).attemptEffect(new Vector3(arrowMoveX, arrowMoveY
+                            , arrowMoveZ)))
+                            {
+                                return true;
+                            }
+                            else {
+                                return false;
+                            }
+                        }
                         return true;
                     }
 
@@ -150,6 +177,13 @@ public class Slot : MonoBehaviour {
 
     public void artifactRemoved() {
         occupied = false;
+        //foregoing the possibily of level design where you can not go into certain areas with arrows,
+        //because the opposite of taking pieces out would have to be prevented as well, and don't
+        //feel like dealing with all the intricacies.
+        if (parentObelisk is ArrowObelisk) {
+            //don't put minueses here, because two negatives will make a positive
+            ((ArrowObelisk)parentObelisk).attemptEffect(new Vector3(arrowMoveX, arrowMoveY, arrowMoveZ));
+        }
         parentObelisk.processStateChange(1);
     }
 
