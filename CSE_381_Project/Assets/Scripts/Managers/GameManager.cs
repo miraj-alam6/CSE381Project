@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance;
 
     public List<MovingStructure> movingStructures;
+    public List<ArrowMovingStructure> arrowMovingStructures;
     public List<Artifact> artifacts;
     public List<ScaleAnimation> scaleAnimations;
     public List<CannonBall> cannonBalls;
@@ -61,11 +62,16 @@ public class GameManager : MonoBehaviour {
         if (currentLevel is Level1)
         {
             Debug.Log("arite,what");
-            SceneManager.LoadScene("_scenes/Level2");
+            SceneManager.LoadScene("_scenes/Level3");
         }
         else if (currentLevel is Level2)
         {
             SceneManager.LoadScene("_scenes/Level3");
+        }
+
+        else if (currentLevel is Level3)
+        {
+            SceneManager.LoadScene("_scenes/Level2");
         }
     }
 
@@ -98,6 +104,10 @@ public class GameManager : MonoBehaviour {
     public void addMovingStructure(MovingStructure structure)
     {
         movingStructures.Add(structure);
+    }
+    public void addArrowMovingStructure(ArrowMovingStructure structure)
+    {
+        arrowMovingStructures.Add(structure);
     }
     public void addArtifact(Artifact artifact)
     {
@@ -140,6 +150,13 @@ public class GameManager : MonoBehaviour {
             movingStructures[i].activated = false;
         }
 
+
+        //deactivate all arrow moving structures
+        for (int i = 0; i < arrowMovingStructures.Count; i++)
+        {
+            arrowMovingStructures[i].activated = false;
+        }
+
         //pause all artifacts
         for (int i = 0; i < artifacts.Count; i++)
         {
@@ -170,11 +187,17 @@ public class GameManager : MonoBehaviour {
     {
         playerController.active = true;
         playerPickup.active = true;
+        //unpause all normal moving structures
         for (int i = 0; i < movingStructures.Count; i++)
         {
             movingStructures[i].activated = true;
         }
 
+        //unpause all arrow moving structures
+        for (int i = 0; i < arrowMovingStructures.Count; i++)
+        {
+            arrowMovingStructures[i].activated = true;
+        }
         //unpause all artifacts
         for (int i = 0; i < artifacts.Count; i++)
         {
