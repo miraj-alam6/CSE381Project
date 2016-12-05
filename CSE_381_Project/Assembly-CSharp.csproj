@@ -45,13 +45,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Enviroment\ActivateHelper.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
      <Compile Include="Assets\Scripts\Enviroment\Artifact.cs" />
+     <Compile Include="Assets\Scripts\Enviroment\BumperSender.cs" />
      <Compile Include="Assets\Scripts\Enviroment\CannonTrigger.cs" />
      <Compile Include="Assets\Scripts\Enviroment\InsideOut.cs" />
      <Compile Include="Assets\Scripts\Enviroment\MessageRing.cs" />
      <Compile Include="Assets\Scripts\Enviroment\MovingStructure.cs" />
+     <Compile Include="Assets\Scripts\Enviroment\Resetter.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ScaleAnimation.cs" />
+     <Compile Include="Assets\Scripts\Enviroment\SpecialBumper.cs" />
      <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonBall.cs" />
