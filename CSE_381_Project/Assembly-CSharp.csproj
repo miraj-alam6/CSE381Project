@@ -45,8 +45,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\FadingText.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ActivateHelper.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
+     <Compile Include="Assets\Scripts\Enviroment\ArrowMovingStructure.cs" />
      <Compile Include="Assets\Scripts\Enviroment\Artifact.cs" />
      <Compile Include="Assets\Scripts\Enviroment\BumperSender.cs" />
      <Compile Include="Assets\Scripts\Enviroment\CannonTrigger.cs" />
@@ -57,6 +59,7 @@
      <Compile Include="Assets\Scripts\Enviroment\ScaleAnimation.cs" />
      <Compile Include="Assets\Scripts\Enviroment\SpecialBumper.cs" />
      <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\ArrowObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonBall.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonFire.cs" />
