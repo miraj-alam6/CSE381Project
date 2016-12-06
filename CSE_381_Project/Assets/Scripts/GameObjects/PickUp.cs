@@ -198,6 +198,75 @@ public class PickUp : MonoBehaviour
         }
     }
 
+
+    void pickUpObject(GameObject hitObject)
+    {
+
+        //This is checking it is an artifact pickup-able object
+        if (!hitObject.tag.Equals("Artifact")) //possibly take this out
+        {
+            return;
+        }
+
+        else
+        {
+            primaryRotating = false;
+            if (hitObject.transform.parent != null && hitObject.transform.parent.tag.Equals("Slot"))
+            {
+
+                Slot artifactSlot = hitObject.transform.parent.GetComponent<Slot>();
+                //If it is not inserting
+                float removeDistance = Vector3.Distance(Camera.main.transform.position, hitObject.transform.position);
+                if (!artifactSlot.getIsInserting() && removeDistance > minRemoveDistance)
+                {
+                    SoundManager.instance.removePiece();
+                    heldObject = hitObject;
+                    heldArtifact = heldObject.GetComponent<Artifact>();
+                    heldArtifact.turnOnConstraints();
+                    heldArtifact.setColliderTrigger(true);
+                    heldObject.GetComponent<Rigidbody>().useGravity = false;
+                    heldObject.GetComponent<Rigidbody>().isKinematic = true;
+                    //Do this before parenting to make sure you don't get a weird angle
+
+                    heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+                    heldObject.transform.parent = Camera.main.transform;
+                    heldArtifact.setIsHeld(true);
+                    //heldObject.transform.localRotation = new Quaternion(0.0f, 0, 0, heldObject.transform.rotation.w);
+                    heldObject = hitObject;
+
+                    heldArtifact.setSpringDistance(holdDistance);
+                    heldRotX = heldArtifact.lastConfig.x;
+                    heldRotY = heldArtifact.lastConfig.y;
+                    heldRotZ = heldArtifact.lastConfig.z;
+                    //for some reason, if I don't do localEulerAngles here, it messes up
+                    //if i try to just use localAngles and use a Quaternion
+                    heldObject.transform.localEulerAngles = heldArtifact.lastConfig;
+                    artifactSlot.artifactRemoved();
+
+                }
+            }
+            else {
+                heldObject = hitObject;
+                heldObject.GetComponent<Artifact>().turnOnConstraints();
+                heldObject.GetComponent<Artifact>().setColliderTrigger(true);
+                heldObject.GetComponent<Rigidbody>().useGravity = false;
+                heldObject.GetComponent<Rigidbody>().isKinematic = true;
+                //This vec3 is the camera position + a distance of magnitude 'holdDistance' in front of the camera
+                heldObject.transform.position = Camera.main.transform.position + Camera.main.transform.forward * holdDistance;
+                heldObject.transform.parent = Camera.main.transform;
+                heldObject.GetComponent<Artifact>().setIsHeld(true);
+                heldObject.transform.localRotation = new Quaternion(0.0f, 0, 0, heldObject.transform.rotation.w);
+                heldObject = hitObject;
+                heldObject.GetComponent<Artifact>().setSpringDistance(holdDistance);
+
+                heldRotX = 0;
+                heldRotY = 0;
+                heldRotZ = 0;
+
+            }
+        }
+    }
+
     public void dropObject()
     {
         primaryRotating = false;

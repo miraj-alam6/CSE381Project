@@ -136,15 +136,17 @@ public class Artifact : MonoBehaviour {
     {
         //Debug.Log("Ho");
         currentDistance -= springInSpeed * Time.deltaTime;
-        if (currentDistance <= 1)
+        if (currentDistance <= -1.0f)
         {
-            Camera.main.gameObject.GetComponent<PickUp>().dropObject();
+            currentDistance = -1.0f;
+          //  Camera.main.gameObject.GetComponent<PickUp>().dropObject();
             
 
            // currentDistance = 2;
            // transform.position = Camera.main.transform.position + Camera.main.transform.forward * currentDistance;
         }
         else {
+
             transform.position = Camera.main.transform.position + Camera.main.transform.forward * currentDistance;
         }
 

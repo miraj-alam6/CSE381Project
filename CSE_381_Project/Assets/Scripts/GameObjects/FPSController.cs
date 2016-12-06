@@ -48,14 +48,6 @@ public class FPSController : MonoBehaviour
         Debug.Log("Staying");
         if (collisionInfo.gameObject.tag.Equals("MovePlat")) {
 
-            // IMPLEMENT EXTRA FEAUTURE HERE IN FUTURE
-            //Possible idea for future, maybe have a counter that counts down while you stay
-            //collided until it decides that you should be parented to the object. 
-            //The purpose of this is to delay how quickly your character becomes the same speed
-            //as the platform, thus the player needs to make sure they land on the platform more near
-            //and that they won't automatically be safe and on top of the platform if they land on the
-            //edge
-            // IMPLEMENT EXTRA FEAUTURE HERE IN FUTURE
             Debug.Log("Colliding with platform");
         }
     }
@@ -195,6 +187,10 @@ public class FPSController : MonoBehaviour
         cc.Move(speedVector * Time.deltaTime); // Need to multiply by Time.deltaTime to make sure
         //the speed is not different on different framerates.
         // float forwardSpeed = Input.GetAxis("Vertical");
+
+        if (Input.GetKeyDown("C")) {
+            Debug.Log("Should summon Juno's artifact");
+        }
     }
 
     //Sets the direction vector of which the player will be 'pushed' from collision
