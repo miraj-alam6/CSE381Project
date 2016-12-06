@@ -40,7 +40,8 @@ public class PickUp : MonoBehaviour
     public bool primaryRotating;
     public bool primaryRotatingClockwise; //this is
     public bool active = true;
-
+    public bool hasUltimatePower = false;
+    public GameObject theUltimateArtifact;
     void Start() {
         GameManager.instance.setPlayerPickup(this);
     }
@@ -99,20 +100,31 @@ public class PickUp : MonoBehaviour
         }
 
 		if (Input.GetButtonDown("Fire1")) {
+           
          //   print(Vector3.Dot(Camera.main.transform.forward,
          //           (obelisk.transform.position - Camera.main.transform.position).normalized));
             if (heldObject != null && slot != null) {
                 //TODO: probably would be more accurate to do this with the insert position rather than
                 //the obelisk position
+                Debug.Log("Yoooo");
                 float dotProduct = Vector3.Dot(Camera.main.transform.forward, 
 					(obelisk.transform.position - Camera.main.transform.position).normalized);
 				if (dotProduct >= amountFacingObelisk) {
                     //Facing obelisk, inside valid place trigger, while holding an artifact currently
-                    
+                    Debug.Log("Woah");
                     insertArtifact ();
 				}
 			}
 		}
+
+        if (hasUltimatePower)
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                Debug.Log("Should summon Juno's artifact");
+                pickUpObject(theUltimateArtifact);
+            }
+        }
     }
 
     void checkDistance()
@@ -202,6 +214,9 @@ public class PickUp : MonoBehaviour
     void pickUpObject(GameObject hitObject)
     {
 
+        if (heldObject) {
+            return;
+        }
         //This is checking it is an artifact pickup-able object
         if (!hitObject.tag.Equals("Artifact")) //possibly take this out
         {

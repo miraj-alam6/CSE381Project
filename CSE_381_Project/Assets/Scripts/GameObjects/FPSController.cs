@@ -188,9 +188,7 @@ public class FPSController : MonoBehaviour
         //the speed is not different on different framerates.
         // float forwardSpeed = Input.GetAxis("Vertical");
 
-        if (Input.GetKeyDown("C")) {
-            Debug.Log("Should summon Juno's artifact");
-        }
+        
     }
 
     //Sets the direction vector of which the player will be 'pushed' from collision

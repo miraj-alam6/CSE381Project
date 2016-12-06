@@ -84,13 +84,17 @@ public class Artifact : MonoBehaviour {
 
     public void turnOffConstraints()
     {
-        rb.constraints = RigidbodyConstraints.None;
+        if (rb) { 
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
     public void turnOnConstraints()
     {
+        if (rb) { 
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
             | RigidbodyConstraints.FreezeRotationZ;
+        }
     }
 
     public void OnTriggerStay(Collider other) {

@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\FadingText.cs" />
     <Compile Include="Assets\Scripts\Enviroment\ActivateHelper.cs" />
     <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
     <Compile Include="Assets\Scripts\Enviroment\ArrowMovingStructure.cs" />
