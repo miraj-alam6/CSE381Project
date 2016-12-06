@@ -6,6 +6,7 @@ using System.Collections;
 //the messages sent to current level
 public class MessageEvent : MonoBehaviour
 {
+    // Why isn't this changing and being committed.
     public GameObject messageToTrigger;
     public float messageStartDelay = 1.0f;
     public float timeMessageStays = 5.0f;

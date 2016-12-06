@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PickUp : MonoBehaviour
 {
+
+    //Added this comment to update the git 
     //Used for raycasting to pick up objects
 	Vector3[] rayCasts = {new Vector3 (0.5f, 0.5f, 0f), new Vector3 (0.4f, 0.4f, 0f), new Vector3 (0.6f, 0.4f, 0f),
 		new Vector3 (0.4f, 0.6f, 0f), new Vector3 (0.6f, 0.6f, 0f), new Vector3 (0.4f, 0.5f, 0f), 

@@ -5,7 +5,7 @@ using System.Collections;
 //The above line raises a compiler side error if there is no Character controller on the game
 //object that this script is attached to. Basically it forces a characte controller to show up
 //every time you attach this script to a game object.
-
+//Added this comment to update the git 
 public class FPSController : MonoBehaviour
 {
     //---Variables for cannon ball collision, names are left generic in case of future pushing mechanics...---
