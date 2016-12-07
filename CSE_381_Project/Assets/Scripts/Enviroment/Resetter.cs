@@ -8,6 +8,8 @@ public class Resetter : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.tag.Equals("Player")) {
             objectToReset.transform.position = positionToResetTo;
+            objectToReset.GetComponent<MovingStructure>().setupActivePoints(
+                objectToReset.GetComponent<MovingStructure>().pathIndex);
         }
     }
 }
