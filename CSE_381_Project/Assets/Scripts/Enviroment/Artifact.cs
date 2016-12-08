@@ -24,6 +24,10 @@ public class Artifact : MonoBehaviour {
     public string specialMessage;
     //this boolean tells it to do it
 
+	//Length of each raycast - 4 corners and 1 center facing out, 1 facing up, 1 facing down, 1 facing left, 1 facing right
+	public float[] rayCastLengths = new float[9];
+	public bool debug;
+
     // Use this for initialization
     void Start() {
         GameManager.instance.addArtifact(this);
@@ -52,6 +56,23 @@ public class Artifact : MonoBehaviour {
         //should cause you to drop the object. But when dropping it, it gets a large amount of
         //force applied to it, so this must be cooled down
         
+		if (debug) {
+			Vector3[] raycastDirections = {transform.forward.normalized, 
+				((transform.forward + transform.right + transform.up) / 3).normalized,
+				((transform.forward + (transform.right * -1) + transform.up) / 3).normalized, 
+				(((transform.forward + transform.right + (transform.up * -1)) / 3)).normalized,
+				((transform.forward + (transform.right * -1) + (transform.up * -1)) / 3).normalized,
+				transform.up.normalized, 
+				(transform.up * -1).normalized, 
+				transform.right.normalized, 
+				(transform.right * -1).normalized
+			};
+			
+			for (int i = 0; i < raycastDirections.Length; i++) {
+				Debug.DrawRay (transform.position, raycastDirections [i] * rayCastLengths [i], Color.white, 0.5f);
+			}
+		}
+
         if (!active) {
             return;
         }
@@ -74,9 +95,36 @@ public class Artifact : MonoBehaviour {
                 currentDistance = 2;
                 transform.position = Camera.main.transform.position + Camera.main.transform.forward * currentDistance; 
             }
-            if (springOutAttempt) {
-                springOut();
-            }
+
+			//Added to help eliminate shaking on held artifact
+			Vector3[] raycastDirections = {transform.forward.normalized, 
+				((transform.forward + transform.right + transform.up) / 3).normalized,
+				((transform.forward + (transform.right * -1) + transform.up) / 3).normalized, 
+				(((transform.forward + transform.right + (transform.up * -1)) / 3)).normalized,
+				((transform.forward + (transform.right * -1) + (transform.up * -1)) / 3).normalized,
+				transform.up.normalized, 
+				(transform.up * -1).normalized, 
+				transform.right.normalized, 
+				(transform.right * -1).normalized
+			};
+			RaycastHit hit;
+			bool noHits = true;
+
+			for(int i = 0; i < raycastDirections.Length; i++)
+			{
+				Ray ray = new Ray(transform.position, raycastDirections[i]);
+				if (Physics.Raycast(ray, out hit, rayCastLengths[i]))
+				{
+					if (!hit.transform.tag.Equals("Player"))
+					{
+						noHits = false;
+					}
+				}
+			}
+			//ADD RAYCAST LENGTH TO DECLARATIONS AT TOP, MAKE PUBLIC, SET TO VALUE!
+			if (springOutAttempt && noHits) {
+				springOut();
+			}
 
         }
 
