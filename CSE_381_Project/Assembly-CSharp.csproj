@@ -87,6 +87,7 @@
      <Compile Include="Assets\Scripts\Menu\ButtonEventHandler.cs" />
      <Compile Include="Assets\Scripts\Menu\MoveShapeUI.cs" />
      <Compile Include="Assets\Scripts\Menu\PauseMenuButtonEventHandler.cs" />
+     <None Include="Assets\SkyBox\README.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

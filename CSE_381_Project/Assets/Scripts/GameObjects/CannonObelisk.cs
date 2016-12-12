@@ -29,7 +29,7 @@ public class CannonObelisk : Obelisk
         SoundManager.instance.activateObelisk();
         for (int i = 0; i < affectedCannons.Length; i++)
         {
-            affectedCannons[i].active = !affectedCannons[i].active;
+			affectedCannons[i].isOn = !affectedCannons[i].isOn;
         }
 
     }
@@ -39,7 +39,7 @@ public class CannonObelisk : Obelisk
 
         for (int i = 0; i < affectedCannons.Length; i++)
         {
-            affectedCannons[i].active = !affectedCannons[i].active;
+            affectedCannons[i].isOn = !affectedCannons[i].isOn;
         }
 
     }

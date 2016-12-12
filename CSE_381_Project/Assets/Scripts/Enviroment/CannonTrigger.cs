@@ -12,7 +12,7 @@ public class CannonTrigger : MonoBehaviour {
         {
             foreach (CannonFire cf in cannons)
             {
-                cf.active = onOrOff;
+                cf.isOn = onOrOff;
             }
 
         }
