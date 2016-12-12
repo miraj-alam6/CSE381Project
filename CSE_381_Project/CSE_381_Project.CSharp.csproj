@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\Enviroment\Resetter.cs" />
     <Compile Include="Assets\Scripts\Enviroment\ScaleAnimation.cs" />
     <Compile Include="Assets\Scripts\Enviroment\SpecialBumper.cs" />
+    <Compile Include="Assets\Scripts\Enviroment\SwitchPathByTrigger.cs" />
     <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
     <Compile Include="Assets\Scripts\GameObjects\ArrowObelisk.cs" />
     <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
