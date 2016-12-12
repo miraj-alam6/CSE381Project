@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour {
     //if a single game manager is used throughout the game, then make sure
     //to reset the elapsed time at start of the level
     // Use this for initialization
+    public FadingText levelText;
     void Awake () {
         if (instance == null)
         {
@@ -145,6 +146,12 @@ public class GameManager : MonoBehaviour {
         playerController.active = false;
         playerPickup.active = false;
 
+        //pause levelText animation
+        if (levelText)
+        {
+            levelText.active = false;
+        }
+
         //deactivate all movingStructures
         for (int i = 0; i < movingStructures.Count; i++) {
             movingStructures[i].activated = false;
@@ -187,6 +194,13 @@ public class GameManager : MonoBehaviour {
     {
         playerController.active = true;
         playerPickup.active = true;
+
+        //unpause levelText animation
+        if (levelText)
+        {
+            levelText.active = true;
+        }
+
         //unpause all normal moving structures
         for (int i = 0; i < movingStructures.Count; i++)
         {
@@ -227,8 +241,16 @@ public class GameManager : MonoBehaviour {
     //Need this to close pause screen through a button, and prevent infinite recursion
     public void unpauseLogic()
     {
+        
         playerController.active = true;
         playerPickup.active = true;
+
+        //unpause levelText animation
+        if (levelText)
+        {
+            levelText.active = true;
+        }
+        //unpause moving structures
         for (int i = 0; i < movingStructures.Count; i++)
         {
             movingStructures[i].activated = true;
@@ -239,6 +261,22 @@ public class GameManager : MonoBehaviour {
         {
             artifacts[i].unpauseArtifact();
         }
+        //unpause all scale animations
+        for (int i = 0; i < scaleAnimations.Count; i++)
+        {
+            scaleAnimations[i].active = true;
+        }
+        //unpause all cannonballs
+        for (int i = 0; i < cannonBalls.Count; i++)
+        {
+            cannonBalls[i].unpause();
+        }
+        //unpause all cannons
+        for (int i = 0; i < cannons.Count; i++)
+        {
+            cannons[i].active = true;
+        }
+
         Cursor.lockState = CursorLockMode.Locked;
         gamePaused = false;
     }
