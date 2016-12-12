@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameObjects\Slot.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\sky5X\README.txt">
     <Files>
-      <File FileName="Assets\Scripts\GameObjects\PickUp.cs" Line="110" Column="39" />
-      <File FileName="Assets\Scripts\GameObjects\Slot.cs" Line="46" Column="12" />
+      <File FileName="Assets\Scripts\GameObjects\PickUp.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameObjects\Slot.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Enviroment\Artifact.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\GameObjects\CannonFire.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GameObjects\CannonFire.cs" Line="10" Column="28" />
       <File FileName="Assets\Scripts\GameObjects\CannonBall.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameObjects\FPSController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameObjects\FPSShoot.cs" Line="1" Column="1" />
@@ -16,6 +16,10 @@
       <File FileName="Assets\Scripts\Level\Level1.cs" Line="1" Column="1" />
       <File FileName="Assets\FadingText.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\GameObjects\SimpleObelisk.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enviroment\CannonTrigger.cs" Line="15" Column="24" />
+      <File FileName="Assets\Scripts\GameObjects\CannonObelisk.cs" Line="22" Column="18" />
+      <File FileName="Assets\Scripts\Managers\GameManager.cs" Line="183" Column="10" />
+      <File FileName="Assets\sky5X\README.txt" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
