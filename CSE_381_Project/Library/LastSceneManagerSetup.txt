@@ -1,4 +1,20 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/_scenes/Level2.unity
+=======
+<<<<<<< HEAD
+- path: Assets/_scenes/Level4.unity
+=======
+<<<<<<< HEAD
+- path: Assets/_scenes/TryingArrow.unity
+=======
+<<<<<<< HEAD
+- path: Assets/_scenes/Level3.unity
+=======
+- path: Assets/_scenes/Level2.unity
+>>>>>>> ddb25be96c233a86793257598a5f0bfbc65fa712
+>>>>>>> 70d7eea69a7800436f61b3d51af01468acf70f5d
+>>>>>>> b83f5b8a161466846916266d0f8b96cc1b9d0f29
+>>>>>>> 46c92a61ac66b16b185ed3ddbe1ff1e5c263aff4
   isLoaded: 1
   isActive: 1

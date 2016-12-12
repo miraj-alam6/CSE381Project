@@ -102,7 +102,6 @@ public class Slot : MonoBehaviour {
     }
 
 	public void handleArtifact (GameObject heldObject){
-        Debug.Log("Reached hereeee?");
         if (occupied) {
             return;
         }

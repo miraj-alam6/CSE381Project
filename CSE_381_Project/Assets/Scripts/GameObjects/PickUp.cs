@@ -108,12 +108,10 @@ public class PickUp : MonoBehaviour
             if (heldObject != null && slot != null) {
                 //TODO: probably would be more accurate to do this with the insert position rather than
                 //the obelisk position
-                Debug.Log("Yoooo");
                 float dotProduct = Vector3.Dot(Camera.main.transform.forward, 
 					(obelisk.transform.position - Camera.main.transform.position).normalized);
 				if (dotProduct >= amountFacingObelisk) {
                     //Facing obelisk, inside valid place trigger, while holding an artifact currently
-                    Debug.Log("Woah");
                     insertArtifact ();
 				}
 			}
@@ -160,11 +158,11 @@ public class PickUp : MonoBehaviour
 		{
             primaryRotating = false;
             if (hitObject.transform.parent != null && hitObject.transform.parent.tag.Equals("Slot")){
-				
+
 				Slot artifactSlot = hitObject.transform.parent.GetComponent<Slot>();
                 //If it is not inserting
                 float removeDistance = Vector3.Distance(Camera.main.transform.position, hitObject.transform.position);
-                if (!artifactSlot.getIsInserting() && removeDistance > minRemoveDistance) {
+				if (!artifactSlot.getIsInserting() && removeDistance > minRemoveDistance) {
                     SoundManager.instance.removePiece();
 					heldObject = hitObject;
                     heldArtifact = heldObject.GetComponent<Artifact>();
