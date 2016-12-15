@@ -39,7 +39,7 @@ public class CannonBallDeux : CannonBall {
 	}
 
 	void OnTriggerEnter(Collider other){
-		if (other.tag.Equals ("Player")) {
+		if (other.tag.Equals ("Player") || other.tag.Equals("MainCamera")) {
             Vector3 forceDirection = (other.gameObject.transform.position - transform.position);
             float facingCheck = Vector3.Dot(fireDirection.normalized, forceDirection.normalized);
             if (facingCheck >= 0)
@@ -81,7 +81,7 @@ public class CannonBallDeux : CannonBall {
 
             }
         }
-        else if(!other.tag.Equals("Cannon")){
+        else if (other.tag.Equals("DestroyBall")){
             destroySelf();
         }
 	}

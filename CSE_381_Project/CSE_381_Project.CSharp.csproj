@@ -91,6 +91,7 @@
     <Compile Include="Assets\Scripts\GameObjects\MainCamera.cs" />
     <Compile Include="Assets\Scripts\GameObjects\Obelisk.cs" />
     <Compile Include="Assets\Scripts\GameObjects\PickUp.cs" />
+    <Compile Include="Assets\Scripts\GameObjects\RotateObject.cs" />
     <Compile Include="Assets\Scripts\GameObjects\SimpleObelisk.cs" />
     <Compile Include="Assets\Scripts\GameObjects\Slot.cs" />
     <Compile Include="Assets\Scripts\GameObjects\TutorialPickUp.cs" />
