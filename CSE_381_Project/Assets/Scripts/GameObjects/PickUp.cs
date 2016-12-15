@@ -112,7 +112,8 @@ public class PickUp : MonoBehaviour
 					(obelisk.transform.position - Camera.main.transform.position).normalized);
 				if (dotProduct >= amountFacingObelisk) {
                     //Facing obelisk, inside valid place trigger, while holding an artifact currently
-                    insertArtifact ();
+					print("good1");
+					insertArtifact ();
 				}
 			}
 		}
