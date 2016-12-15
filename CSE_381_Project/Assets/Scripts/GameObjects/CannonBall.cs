@@ -3,18 +3,18 @@ using System.Collections;
 
 public class CannonBall : MonoBehaviour {
 
-	PickUp puScript;
-    FPSController player;
+	protected PickUp puScript;
+    protected FPSController player;
 	public float travelSpeed;
 	public float maxDistance;
     public float artifactImpactMagnitude;
     public float playerImpactMagnitude;
     public bool active = true;
 
-    private Vector3 velocityBeforeSleep;
-    private Rigidbody rb;
-    Vector3 fireDirection;
-    Vector3 startPosition;
+    protected Vector3 velocityBeforeSleep;
+    protected Rigidbody rb;
+    protected Vector3 fireDirection;
+    protected Vector3 startPosition;
 
 	// Use this for initialization
 	void Start () {
@@ -87,9 +87,10 @@ public class CannonBall : MonoBehaviour {
         }
 
 
-		if (other.tag.Equals ("Artifact")) {
+        if (other.tag.Equals("Artifact"))
+        {
             Vector3 forceDirection = (other.gameObject.transform.position - transform.position);
-            
+
             //Check if the artifact collided with the front of the cannonBall, not the back 
             float facingCheck = Vector3.Dot(fireDirection.normalized, forceDirection.normalized);
             if (facingCheck >= 0)
@@ -108,9 +109,10 @@ public class CannonBall : MonoBehaviour {
                 //Multiply forceDirection by impactMagnitude 
                 rb.AddForce(forceDirection * artifactImpactMagnitude, ForceMode.Impulse);
                 destroySelf();
-                
+
             }
         }
+       
 	}
 
     public void destroySelf() {

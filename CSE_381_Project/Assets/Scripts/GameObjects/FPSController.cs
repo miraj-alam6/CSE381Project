@@ -38,7 +38,7 @@ public class FPSController : MonoBehaviour
     void Start()
     {
         GameManager.instance.setPlayerController(this);
-        Cursor.lockState = CursorLockMode.Locked;
+        //GameManager.instance.turnOffCursor();
         cc  = GetComponent<CharacterController>();
     }
 
@@ -112,7 +112,7 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetButton("Jump"))
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            GameManager.instance.turnOffCursor();
             //Check if you are touching the ground.
             if (cc.isGrounded && canJump && !stopMovement)
             {
