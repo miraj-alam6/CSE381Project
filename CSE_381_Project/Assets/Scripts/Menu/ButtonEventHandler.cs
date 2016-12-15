@@ -8,13 +8,15 @@ public class ButtonEventHandler : MonoBehaviour {
 	public GameObject levelSelectScreen;
 	public GameObject howToPlayScreen;
 	private GameObject currentScreen;
-
+    public Texture2D customCursor;
 	// Initialized to main screen display, others disabled
 	void Start () {
+        turnOnCursor();
 		mainScreen.SetActive (true);
 		levelSelectScreen.SetActive (false);
 		howToPlayScreen.SetActive (false);
 		currentScreen = mainScreen;
+        
 	}
 
 	public void LoadLevelSelectScreen(){
@@ -37,6 +39,24 @@ public class ButtonEventHandler : MonoBehaviour {
 
 	public void LoadNewGame(){
 		print ("CLICKED");
-		SceneManager.LoadScene ("_scenes/Level1");
+        turnOffCursor();
+        SceneManager.LoadScene ("_scenes/Level1");
 	}
+
+
+    public void turnOnCursor()
+    {
+        Debug.Log("Why");
+        Cursor.lockState = CursorLockMode.None;
+       // Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = true;
+    }
+
+    public void turnOffCursor()
+    {
+
+        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.SetCursor(customCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = false;
+    }
 }

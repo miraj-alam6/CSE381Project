@@ -6,7 +6,7 @@ using System;
 
 public class GameManager : MonoBehaviour {
     public static GameManager instance;
-
+    public Texture2D customCursor;
     public List<MovingStructure> movingStructures;
     public List<ArrowMovingStructure> arrowMovingStructures;
     public List<Artifact> artifacts;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour {
 	}
 
     void Start() {
-        
+        turnOffCursor();
     }
 
 
@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour {
             scaleAnimations[i].active = false;
         }
 
-        Cursor.lockState = CursorLockMode.None;
+        turnOnCursor();
         canvas.GetComponent<PauseMenuButtonEventHandler>().LoadPauseScreen();
         gamePaused = true;
         //pause all cannonballs
@@ -233,7 +233,8 @@ public class GameManager : MonoBehaviour {
         {
             cannons[i].active = true;
         }
-        Cursor.lockState = CursorLockMode.Locked;
+        turnOffCursor();
+
         canvas.GetComponent<PauseMenuButtonEventHandler>().ClosePauseScreen();
         gamePaused = false;
     }
@@ -277,11 +278,24 @@ public class GameManager : MonoBehaviour {
             cannons[i].active = true;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
+        turnOffCursor();
+
         gamePaused = false;
     }
 
+    public void turnOnCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        //Cursor.SetCursor(GameManager.instance.customCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = true;
+    }
 
+    public void turnOffCursor() {
+
+        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.SetCursor(GameManager.instance.customCursor, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = false;
+    }
     public void restartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
