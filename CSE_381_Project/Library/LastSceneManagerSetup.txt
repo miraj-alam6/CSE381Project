@@ -1,20 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/_scenes/Level5.unity
-=======
-<<<<<<< HEAD
-- path: Assets/_scenes/Level4.unity
-=======
-<<<<<<< HEAD
 - path: Assets/_scenes/Level1.unity
-=======
-<<<<<<< HEAD
-- path: Assets/_scenes/Level4.unity
-=======
-- path: Assets/_scenes/Menu.unity
->>>>>>> 3ec66dbc671c154e3496e396a1d89a30a98b9a9d
->>>>>>> 98e5912159630fad8868725423c7c47717c24539
->>>>>>> cc48813d820b449e943d1d4c33103748af3a52c8
->>>>>>> 33bb28e450df2597143c446b8aca376ec8bd8cf7
   isLoaded: 1
   isActive: 1
