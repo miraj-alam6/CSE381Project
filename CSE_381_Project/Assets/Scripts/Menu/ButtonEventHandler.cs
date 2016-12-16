@@ -7,7 +7,8 @@ public class ButtonEventHandler : MonoBehaviour {
 	public GameObject mainScreen;
 	public GameObject levelSelectScreen;
 	public GameObject howToPlayScreen;
-	private GameObject currentScreen;
+    public GameObject creditsScreen;
+    private GameObject currentScreen;
     public Texture2D customCursor;
 	// Initialized to main screen display, others disabled
 	void Start () {
@@ -15,7 +16,8 @@ public class ButtonEventHandler : MonoBehaviour {
 		mainScreen.SetActive (true);
 		levelSelectScreen.SetActive (false);
 		howToPlayScreen.SetActive (false);
-		currentScreen = mainScreen;
+        creditsScreen.SetActive(false);
+        currentScreen = mainScreen;
         
 	}
 
@@ -37,7 +39,14 @@ public class ButtonEventHandler : MonoBehaviour {
 		currentScreen = howToPlayScreen;
 	}
 
-	public void LoadNewGame(){
+
+    public void LoadCreditsScreen()
+    {
+        currentScreen.SetActive(false);
+        creditsScreen.SetActive(true);
+        currentScreen = creditsScreen;
+    }
+    public void LoadNewGame(){
 		print ("CLICKED");
         turnOffCursor();
         SceneManager.LoadScene ("_scenes/Level1");
