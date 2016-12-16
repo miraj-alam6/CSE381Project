@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\FadingText.cs" />
+     <Compile Include="Assets\RotateSkybox.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ActivateHelper.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ActualMovingPlatform.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ArrowMovingStructure.cs" />
@@ -58,10 +59,12 @@
      <Compile Include="Assets\Scripts\Enviroment\Resetter.cs" />
      <Compile Include="Assets\Scripts\Enviroment\ScaleAnimation.cs" />
      <Compile Include="Assets\Scripts\Enviroment\SpecialBumper.cs" />
+     <Compile Include="Assets\Scripts\Enviroment\SwitchPathByTrigger.cs" />
      <Compile Include="Assets\Scripts\Enviroment\TriggerColliderPlatform.cs" />
      <Compile Include="Assets\Scripts\GameObjects\ArrowObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonBall.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\CannonBallDeux.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonFire.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CannonObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\CompoundObelisk.cs" />
