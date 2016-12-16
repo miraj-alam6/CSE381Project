@@ -67,6 +67,9 @@
      <Compile Include="Assets\Scripts\GameObjects\CompoundObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\FPSController.cs" />
      <Compile Include="Assets\Scripts\GameObjects\FPSShoot.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\GoldenDoorHandler.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\GoldenDoorScript.cs" />
+     <Compile Include="Assets\Scripts\GameObjects\GoldenObelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\MainCamera.cs" />
      <Compile Include="Assets\Scripts\GameObjects\Obelisk.cs" />
      <Compile Include="Assets\Scripts\GameObjects\PickUp.cs" />
