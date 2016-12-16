@@ -34,6 +34,8 @@ public class FPSController : MonoBehaviour
                                            // Use this for initialization
     public bool active = true;
     public bool stopMovement = false;
+    public bool fairGame = true;
+    private int cheatCount = 0;
     CharacterController cc;
     void Start()
     {
@@ -62,6 +64,41 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        if (fairGame) {
+
+            if (cheatCount > 1) {
+                if (cheatCount > 2)
+                {
+                    if (cheatCount > 3)
+                    {
+
+                        if (Input.GetKeyDown(KeyCode.O))
+                        {
+                            Debug.Log("JUNO LIVES!!!!");
+                            fairGame = false;
+                            cheatCount++;
+
+                        }
+                    }
+                    else if (Input.GetKeyDown(KeyCode.N))
+                    {
+                        cheatCount++;
+
+                    }
+
+                }
+                else if (Input.GetKeyDown(KeyCode.U))
+                {
+                    cheatCount++;
+
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.J)) {
+                cheatCount++;
+               
+            }
+        }
         if (!active) {
             return;
         }
@@ -105,7 +142,7 @@ public class FPSController : MonoBehaviour
         // Vector3 speedVector = new Vector3(strafeSpeed, Physics.gravity.y, forwardSpeed); //forward movement is across z axis 
         //above is wrong because gravity is not constant.
 
-        if (Input.GetKey(KeyCode.V))
+        if (Input.GetKey(KeyCode.V) && !fairGame)
         {
             verticalVelocity = jumpSpeed * 2;
         }
