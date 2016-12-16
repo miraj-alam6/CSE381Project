@@ -43,6 +43,32 @@ public class ButtonEventHandler : MonoBehaviour {
         SceneManager.LoadScene ("_scenes/Level1");
 	}
 
+	public void LoadLevel1() {
+		turnOffCursor();
+		SceneManager.LoadScene ("_scenes/Level1");
+	}
+
+	public void LoadLevel2() {
+		turnOffCursor();
+		SceneManager.LoadScene ("_scenes/Level3");
+	}
+
+	public void LoadLevel3() {
+		turnOffCursor();
+		SceneManager.LoadScene ("_scenes/Level4");
+	}
+
+	public void LoadLevel4() {
+		turnOffCursor();
+		SceneManager.LoadScene ("_scenes/Level2");
+	}
+
+	public void LoadLevel5() {
+		turnOffCursor();
+		SceneManager.LoadScene ("_scenes/Level5");
+	}
+
+
 
     public void turnOnCursor()
     {
