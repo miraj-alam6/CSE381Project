@@ -67,12 +67,20 @@ public class GameManager : MonoBehaviour {
         }
         else if (currentLevel is Level2)
         {
-            SceneManager.LoadScene("_scenes/Level3");
+            SceneManager.LoadScene("_scenes/Level4");
         }
 
         else if (currentLevel is Level3)
         {
             SceneManager.LoadScene("_scenes/Level2");
+        }
+        else if (currentLevel is Level4)
+        {
+            SceneManager.LoadScene("_scenes/Level5");
+        }
+        else if (currentLevel is Level5)
+        {
+            SceneManager.LoadScene("_scenes/Menu");
         }
     }
 

@@ -103,6 +103,8 @@
     <Compile Include="Assets\Scripts\Level\Level1.cs" />
     <Compile Include="Assets\Scripts\Level\Level2.cs" />
     <Compile Include="Assets\Scripts\Level\Level3.cs" />
+    <Compile Include="Assets\Scripts\Level\Level4.cs" />
+    <Compile Include="Assets\Scripts\Level\Level5.cs" />
     <Compile Include="Assets\Scripts\Level\MessageEvent.cs" />
     <Compile Include="Assets\Scripts\Level\MessageTrigger.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
